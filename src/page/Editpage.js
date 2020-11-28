@@ -16,7 +16,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectIsLogin } from "../redux/reducers/userReducer";
 import { Loading } from "../components/Loader";
 
-export default function Editpage() {
+export default function EditPage() {
   const { id } = useParams();
   const dispatch = useDispatch();
   const history = useHistory();

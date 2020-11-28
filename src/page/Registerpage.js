@@ -14,7 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAuthToken, setAuthToken } from "../utils";
 import { Loading } from "../components/Loader";
 
-export default function Registerpage() {
+export default function RegisterPage() {
   const dispatch = useDispatch();
   const isLoading = useSelector(selectIsLoadingUser);
   const [nickname, setNickname] = useState("");

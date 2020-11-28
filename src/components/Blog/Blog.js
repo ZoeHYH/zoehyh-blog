@@ -1,12 +1,12 @@
 import Header from "../Header";
-import Homepage from "../../page/Homepage";
-import Listpage from "../../page/Listpage";
-import Articlepage from "../../page/Articlepage";
-import Aboutpage from "../../page/Aboutpage";
-import Postpage from "../../page/Postpage";
-import Editpost from "../../page/Editpage";
-import Loginpage from "../../page/Loginpage";
-import Registerpage from "../../page/Registerpage";
+import HomePage from "../../page/HomePage";
+import ListPage from "../../page/ListPage";
+import ArticlePage from "../../page/ArticlePage";
+import AboutPage from "../../page/AboutPage";
+import PostPage from "../../page/PostPage";
+import Editpost from "../../page/EditPage";
+import LoginPage from "../../page/LoginPage";
+import RegisterPage from "../../page/RegisterPage";
 import {
   HashRouter as Router,
   Switch,
@@ -29,32 +29,40 @@ export default function Blog() {
       <Header />
       <Switch>
         <Route exact path="/">
-          <Homepage />
+          <HomePage />
         </Route>
         <Route exact path="/list">
           <Redirect to="/list/1" />
         </Route>
         <Route exact path="/list/:page">
-          <Listpage />
+          <ListPage />
         </Route>
         <Route exact path="/article-:id">
-          <Articlepage />
+          <ArticlePage />
         </Route>
         <Route exact path="/about">
-          <Aboutpage />
+          <AboutPage />
         </Route>
-        <Route exact path="/post">
-          {isLogin ? <Postpage /> : <Redirect to="/" />}
-        </Route>
-        <Route exact path="/edit-:id">
-          {isLogin ? <Editpost /> : <Redirect to="/" />}
-        </Route>
-        <Route exact path="/login">
-          {!isLogin ? <Loginpage /> : <Redirect to="/" />}
-        </Route>
-        <Route exact path="/register">
-          {!isLogin ? <Registerpage /> : <Redirect to="/" />}
-        </Route>
+        {isLogin && (
+          <>
+            <Route exact path="/post">
+              <PostPage />
+            </Route>
+            <Route exact path="/edit-:id">
+              <Editpost />
+            </Route>
+          </>
+        )}
+        {!isLogin && (
+          <>
+            <Route exact path="/login">
+              <LoginPage />
+            </Route>
+            <Route exact path="/register">
+              <RegisterPage />
+            </Route>
+          </>
+        )}
       </Switch>
     </Router>
   );

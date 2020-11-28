@@ -13,7 +13,7 @@ import {
   selectPosts,
 } from "../redux/reducers/postReducer";
 
-export default function Listpage() {
+export default function ListPage() {
   let { page } = useParams();
   const dispatch = useDispatch();
   const isLoading = useSelector(selectIsLoadingPost);
@@ -38,7 +38,8 @@ export default function Listpage() {
             />
           ))}
       <Pagination>
-        {pages &&
+        {posts &&
+          pages &&
           new Array(pages).fill("").map((item, index) => {
             return (
               <Nav

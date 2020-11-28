@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Loading } from "../components/Loader";
 import { useEffect } from "react";
 
-export default function Articlepage() {
+export default function ArticlePage() {
   const { id } = useParams();
   const dispatch = useDispatch();
   const isLoading = useSelector(selectIsLoadingPost);

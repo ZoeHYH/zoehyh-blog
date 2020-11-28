@@ -9,7 +9,7 @@ import {
   selectPosts,
 } from "../redux/reducers/postReducer";
 
-export default function Homepage() {
+export default function HomePage() {
   const dispatch = useDispatch();
   const isLoading = useSelector(selectIsLoadingPost);
   const posts = useSelector(selectPosts);

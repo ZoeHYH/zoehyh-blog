@@ -54,7 +54,9 @@ const ArticleBar = styled.div`
 function ArticleFunction({ $id }) {
   const dispatch = useDispatch();
   const history = useHistory();
+  const isLogin = useSelector(selectIsLogin);
   const handleDelete = () => {
+    if (!isLogin) return;
     dispatch(deletePost($id)).then((data) => {
       dispatch(setIsLoadingPost(false));
       if (data.ok === 0) return;

@@ -9,7 +9,7 @@ import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { selectIsLogin } from "../redux/reducers/userReducer";
 
-export default function Postpage() {
+export default function PostPage() {
   const dispatch = useDispatch();
   const history = useHistory();
   const [title, setTitle] = useState("");

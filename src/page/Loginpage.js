@@ -14,7 +14,7 @@ import {
 import { getAuthToken, setAuthToken } from "../utils";
 import { Loading } from "../components/Loader";
 
-export default function Loginpage() {
+export default function LoginPage() {
   const dispatch = useDispatch();
   const isLoading = useSelector(selectIsLoadingUser);
   const [username, setUsername] = useState("");
@@ -51,7 +51,7 @@ export default function Loginpage() {
           value={password}
           handleOnChange={(value) => setPassword(value)}
         ></Input>
-        <Button>{"登入"}</Button>
+        <Button>登入</Button>
       </FormCard>
     </PageCenter>
   );

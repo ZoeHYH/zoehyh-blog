@@ -25,7 +25,9 @@ export default function ArticlePage() {
   return (
     <Page>
       {isLoading && <Loading />}
-      <Article post={post[0]} hover={false} $center={true} paragraph={true} />
+      {post && (
+        <Article post={post[0]} hover={false} $center={true} paragraph={true} />
+      )}
     </Page>
   );
 }

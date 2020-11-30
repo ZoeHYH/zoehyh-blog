@@ -20,14 +20,12 @@ export default function ArticlePage() {
     dispatch(getPost(id));
   }, [id, dispatch]);
   useEffect(() => {
-    if (post.length === 0) history.push("/");
+    if (post && post.length === 0) history.push("/");
   }, [post, history]);
   return (
     <Page>
       {isLoading && <Loading />}
-      {post && (
-        <Article post={post[0]} hover={false} $center={true} paragraph={true} />
-      )}
+      <Article post={post[0]} hover={false} $center={true} paragraph={true} />
     </Page>
   );
 }

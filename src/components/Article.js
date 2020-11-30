@@ -90,20 +90,23 @@ function ArticleContent({ post, paragraph }) {
 }
 
 export function Article({ post, hover, $center, paragraph }) {
-  if (hover)
-    return (
-      <ArticleHoverContainer
-        as={Link}
-        to={`/article-${post.id}`}
-        $center={$center}
-      >
-        <ArticleContent post={post} paragraph={paragraph} />
-      </ArticleHoverContainer>
-    );
   return (
-    <ArticleContainer $center={$center}>
-      <ArticleContent post={post} paragraph={paragraph} />
-    </ArticleContainer>
+    <>
+      {post &&
+        (hover ? (
+          <ArticleHoverContainer
+            as={Link}
+            to={`/article-${post.id}`}
+            $center={$center}
+          >
+            <ArticleContent post={post} paragraph={paragraph} />
+          </ArticleHoverContainer>
+        ) : (
+          <ArticleContainer $center={$center}>
+            <ArticleContent post={post} paragraph={paragraph} />
+          </ArticleContainer>
+        ))}
+    </>
   );
 }
 

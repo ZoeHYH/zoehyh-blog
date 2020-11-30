@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { Article } from "../components/Article";
 import { Page } from "../components/Page";
 import {
@@ -12,12 +12,16 @@ import { useEffect } from "react";
 
 export default function ArticlePage() {
   const { id } = useParams();
+  const history = useHistory();
   const dispatch = useDispatch();
   const isLoading = useSelector(selectIsLoadingPost);
   const post = useSelector(selectPost);
   useEffect(() => {
     dispatch(getPost(id));
   }, [id, dispatch]);
+  useEffect(() => {
+    if (post.length === 0) history.push("/");
+  }, [post, history]);
   return (
     <Page>
       {isLoading && <Loading />}

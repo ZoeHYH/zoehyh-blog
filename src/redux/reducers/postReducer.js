@@ -33,7 +33,6 @@ export const { setIsLoadingPost, setPost, setPages } = postReducer.actions;
 export const getPost = (id) => (dispatch) => {
   dispatch(setIsLoadingPost(true));
   return getPostAPI(id).then((data) => {
-    console.log(data);
     dispatch(setPost(data));
     dispatch(setIsLoadingPost(false));
   });

@@ -26,6 +26,9 @@ const ArticleContainer = styled.div`
     font-size: ${FONT.sm};
     margin: 5px 0;
     letter-spacing: 2px;
+  }
+  & h3,
+  & p {
     white-space: pre-line;
     word-break: break-all;
   }

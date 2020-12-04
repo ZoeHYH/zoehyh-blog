@@ -12,7 +12,7 @@ const ButtonUnderlineHover = styled.button`
   color: ${COLOR.primary};
   font-size: inherit;
   font-weight: bold;
-  padding: 5px 10px;
+  padding: 10px;
   & span {
     z-index: 1;
     position: relative;

@@ -4,7 +4,6 @@ import ListPage from "../../page/ListPage";
 import ArticlePage from "../../page/ArticlePage";
 import AboutPage from "../../page/AboutPage";
 import PostPage from "../../page/PostPage";
-import Editpost from "../../page/EditPage";
 import LoginPage from "../../page/LoginPage";
 import RegisterPage from "../../page/RegisterPage";
 import {

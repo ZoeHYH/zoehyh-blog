@@ -24,7 +24,7 @@ export const Container = styled.div`
   color: ${COLOR.primaryDark};
   height: ${DISTENCE.lg};
   ${MEDIA.sm} {
-    height: ${DISTENCE.xl};
+    height: 100%;
     flex-direction: column;
   }
 `;

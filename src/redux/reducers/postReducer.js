@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import {
   getPost as getPostAPI,
   getPosts as getPostsAPI,
-  post as postAPI,
+  createPost as createAPI,
   updatePost as updateAPI,
   deletePost as deleteAPI,
 } from "../../WebAPI";
@@ -47,9 +47,9 @@ export const getPosts = () => (dispatch) => {
   });
 };
 
-export const post = (title, body) => (dispatch) => {
+export const createPost = (title, body) => (dispatch) => {
   dispatch(setIsLoadingPost(true));
-  return postAPI(title, body);
+  return createAPI(title, body);
 };
 
 export const updatePost = (id, title, body) => (dispatch) => {

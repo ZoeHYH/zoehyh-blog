@@ -4,7 +4,7 @@ import { FormPage } from "../components/Form";
 import { useState } from "react";
 import { Button } from "../components/Button";
 import { ErrorMessage } from "../components/ErrorMessage";
-import { post, setIsLoadingPost } from "../redux/reducers/postReducer";
+import { createPost, setIsLoadingPost } from "../redux/reducers/postReducer";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { selectIsLogin } from "../redux/reducers/userReducer";
@@ -18,7 +18,7 @@ export default function PostPage() {
   const isLogin = useSelector(selectIsLogin);
   const handleOnSubmit = (event) => {
     if (!isLogin) return history.push("/");
-    dispatch(post(title, body)).then((data) => {
+    dispatch(createPost(title, body)).then((data) => {
       dispatch(setIsLoadingPost(false));
       if (data.ok === 0) return setErrorMessage(data.message);
       history.push(`/article-${data.id}`);

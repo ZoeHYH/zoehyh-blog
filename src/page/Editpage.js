@@ -26,22 +26,22 @@ export default function EditPage() {
   const isLoading = useSelector(selectIsLoadingPost);
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
+
   useEffect(() => {
     dispatch(getPost(id));
   }, [id, dispatch]);
   useEffect(() => {
-    console.log(post);
     setTitle(post[0].title);
     setBody(post[0].body);
   }, [post]);
   const handleOnSubmit = (event) => {
+    event.preventDefault();
     if (!isLogin) return history.push("/");
     dispatch(updatePost(id, title, body)).then((data) => {
       dispatch(setIsLoadingPost(false));
       if (data.ok === 0) return setErrorMessage(data.message);
       history.push(`/article-${data.id}`);
     });
-    event.preventDefault();
   };
   return (
     <Page>

@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { COLOR, DISTENCE, EFFECT, FONT } from "../constants/style";
 import PropTypes from "prop-types";
 import { Link, useHistory, useLocation } from "react-router-dom";
-import { ButtonLink, Nav } from "./Button";
+import { ButtonLink } from "./Button";
 import { useDispatch, useSelector } from "react-redux";
 import { deletePost, setIsLoadingPost } from "../redux/reducers/postReducer";
 import { selectIsLogin } from "../redux/reducers/userReducer";
@@ -15,28 +15,33 @@ const ArticleContainer = styled.div`
   & + & {
     border-top: 1px solid ${COLOR.primaryDark + "30"};
   }
-  & h3 {
-    color: ${COLOR.primaryDark};
-    font-size: ${FONT.md};
-    font-weight: bold;
-    margin: 5px 0;
-    ${(prop) => (prop.$center ? "text-align: center;" : "")}
-  }
   & p {
     font-size: ${FONT.sm};
     margin: 5px 0;
     letter-spacing: 2px;
-  }
-  & h3,
-  & p {
     white-space: pre-line;
     word-break: break-all;
   }
 `;
 
+const ArticleTitle = styled(Link)`
+  color: ${COLOR.primaryDark};
+  font-size: ${FONT.md};
+  font-weight: bold;
+  text-decoration: none;
+  white-space: pre-line;
+  word-break: break-all;
+  ${(prop) => (prop.$center ? "text-align: center;" : "")}
+  & h3 {
+    margin: 5px 0;
+  }
+  & h3:hover {
+    color: ${COLOR.primary};
+  }
+`;
+
 const ArticleHoverContainer = styled(ArticleContainer)`
   display: block;
-  text-decoration: none;
   &:hover {
     box-shadow: ${EFFECT.shadowDark};
   }
@@ -54,13 +59,13 @@ const ArticleBar = styled.div`
   }
 `;
 
-function ArticleFunction({ $id }) {
+function ArticleActions({ id }) {
   const dispatch = useDispatch();
   const history = useHistory();
   const isLogin = useSelector(selectIsLogin);
   const handleDelete = () => {
     if (!isLogin) return;
-    dispatch(deletePost($id)).then((data) => {
+    dispatch(deletePost(id)).then((data) => {
       dispatch(setIsLoadingPost(false));
       if (data.ok === 0) return;
       history.push("/");
@@ -68,13 +73,18 @@ function ArticleFunction({ $id }) {
   };
   return (
     <div>
-      <Nav to={`/edit-${$id}`} isExact={true} label={"編輯"} />
+      <Link to={`/edit-${id}`}>
+        <ButtonLink content={"編輯"} />
+      </Link>
       <span onClick={handleDelete}>
         <ButtonLink isActive={false} content={"刪除"} />
       </span>
     </div>
   );
 }
+ArticleActions.propTypes = {
+  id: PropTypes.number,
+};
 
 function ArticleContent({ post, paragraph }) {
   const location = useLocation();
@@ -82,26 +92,33 @@ function ArticleContent({ post, paragraph }) {
   const isShow = location.pathname !== "/about" && isLogin;
   return (
     <>
-      <h3>{post.title}</h3>
+      <ArticleTitle to={`/article-${post.id}`}>
+        <h3>{post.title}</h3>
+      </ArticleTitle>
       <ArticleBar>
         <span>{new Date(post.createdAt).toLocaleString()}</span>
-        {isShow && <ArticleFunction $id={post.id} />}
+        {isShow && <ArticleActions id={post.id} />}
       </ArticleBar>
       {paragraph && <p>{post.body}</p>}
     </>
   );
 }
+ArticleContent.propTypes = {
+  post: PropTypes.shape({
+    title: PropTypes.string,
+    body: PropTypes.string,
+    createdAt: PropTypes.number,
+    id: PropTypes.number,
+  }),
+  paragraph: PropTypes.bool,
+};
 
 export function Article({ post, hover, $center, paragraph }) {
   return (
     <>
       {post &&
         (hover ? (
-          <ArticleHoverContainer
-            as={Link}
-            to={`/article-${post.id}`}
-            $center={$center}
-          >
+          <ArticleHoverContainer $center={$center}>
             <ArticleContent post={post} paragraph={paragraph} />
           </ArticleHoverContainer>
         ) : (
@@ -123,16 +140,4 @@ Article.propTypes = {
   hover: PropTypes.bool,
   $center: PropTypes.bool,
   paragraph: PropTypes.bool,
-};
-ArticleContent.propTypes = {
-  post: PropTypes.shape({
-    title: PropTypes.string,
-    body: PropTypes.string,
-    createdAt: PropTypes.number,
-    id: PropTypes.number,
-  }),
-  paragraph: PropTypes.bool,
-};
-ArticleFunction.propTypes = {
-  $id: PropTypes.number,
 };

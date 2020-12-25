@@ -6,7 +6,7 @@ import {
   updatePost as updateAPI,
   deletePost as deleteAPI,
 } from "../../WebAPI";
-import { LIST_LIMIT } from "../../constants/varaible";
+import { LIST_LIMIT } from "../../constants/variable";
 
 export const postReducer = createSlice({
   name: "posts",

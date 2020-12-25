@@ -22,7 +22,7 @@ export const userReducer = createSlice({
   },
 });
 
-export const { setIsLoadingUser, setUser, setIsRequest } = userReducer.actions;
+export const { setIsLoadingUser, setUser } = userReducer.actions;
 
 export const getUser = () => (dispatch) =>
   getUserAPI().then((data) => {

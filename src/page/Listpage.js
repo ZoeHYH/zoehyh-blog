@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 import { Nav, Pagination } from "../components/Button";
 import { useDispatch, useSelector } from "react-redux";
 import { Loading } from "../components/Loader";
-import { LIST_LIMIT } from "../constants/varaible";
+import { LIST_LIMIT } from "../constants/variable";
 import {
   getPosts,
   selectIsLoadingPost,

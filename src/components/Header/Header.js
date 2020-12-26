@@ -20,7 +20,7 @@ export default function Header() {
   const handleLogout = () => {
     setAuthToken("");
     dispatch(verifyUser({ goal: "verify" }));
-    if (location.pathname === "/post") {
+    if (location.pathname === "/post" || location.pathname === "/edit") {
       history.push("/");
     }
   };

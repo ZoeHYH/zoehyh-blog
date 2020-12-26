@@ -22,7 +22,8 @@ export default function Blog() {
   const dispatch = useDispatch();
   const isLogin = useSelector(selectUser);
   useEffect(() => {
-    if (getAuthToken()) dispatch(verifyUser({ goal: "verify" }));
+    getAuthToken();
+    dispatch(verifyUser({ goal: "verify" }));
   }, [dispatch]);
   return (
     <Router>

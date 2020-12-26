@@ -60,6 +60,7 @@ export const userReducer = createSlice({
     [verifyUser.rejected]: (state, action) => {
       state.status[action.payload.goal] = "failed";
       state.isLoading = false;
+      state.user = null;
       state.error = action.payload.message;
     },
   },

@@ -6,14 +6,13 @@ import { Button } from "../components/Button";
 import { ErrorMessage } from "../components/ErrorMessage";
 import {
   getPost,
-  selectIsLoadingPost,
+  selectPostIsLoading,
   selectPost,
-  setIsLoadingPost,
   updatePost,
 } from "../redux/reducers/postReducer";
 import { useHistory, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { selectIsLogin } from "../redux/reducers/userReducer";
+import { selectUser } from "../redux/reducers/userReducer";
 import { Loading } from "../components/Loader";
 
 export default function EditPage() {
@@ -22,8 +21,8 @@ export default function EditPage() {
   const history = useHistory();
   const post = useSelector(selectPost);
   const [errorMessage, setErrorMessage] = useState(null);
-  const isLogin = useSelector(selectIsLogin);
-  const isLoading = useSelector(selectIsLoadingPost);
+  const isLogin = useSelector(selectUser);
+  const isLoading = useSelector(selectPostIsLoading);
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
 
@@ -38,7 +37,7 @@ export default function EditPage() {
     event.preventDefault();
     if (!isLogin) return history.push("/");
     dispatch(updatePost(id, title, body)).then((data) => {
-      dispatch(setIsLoadingPost(false));
+      dispatch(selectPostIsLoading(false));
       if (data.ok === 0) return setErrorMessage(data.message);
       history.push(`/article-${data.id}`);
     });

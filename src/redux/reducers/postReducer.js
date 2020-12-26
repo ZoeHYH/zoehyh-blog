@@ -11,13 +11,13 @@ import { LIST_LIMIT } from "../../constants/variable";
 export const postReducer = createSlice({
   name: "posts",
   initialState: {
-    isLoadingPost: false,
+    isLoading: false,
     post: null,
     pages: 1,
   },
   reducers: {
-    setIsLoadingPost: (state, action) => {
-      state.isLoadingPost = action.payload;
+    setIsLoading: (state, action) => {
+      state.isLoading = action.payload;
     },
     setPost: (state, action) => {
       state.post = action.payload;
@@ -28,41 +28,41 @@ export const postReducer = createSlice({
   },
 });
 
-export const { setIsLoadingPost, setPost, setPages } = postReducer.actions;
+export const { setIsLoading, setPost, setPages } = postReducer.actions;
 
 export const getPost = (id) => (dispatch) => {
-  dispatch(setIsLoadingPost(true));
+  dispatch(setIsLoading(true));
   return getPostAPI(id).then((data) => {
     dispatch(setPost(data));
-    dispatch(setIsLoadingPost(false));
+    dispatch(setIsLoading(false));
   });
 };
 
 export const getPosts = () => (dispatch) => {
-  dispatch(setIsLoadingPost(true));
+  dispatch(setIsLoading(true));
   getPostsAPI().then((data) => {
     dispatch(setPages(Math.ceil(data.length / LIST_LIMIT)));
     dispatch(setPost(data));
-    dispatch(setIsLoadingPost(false));
+    dispatch(setIsLoading(false));
   });
 };
 
 export const createPost = (title, body) => (dispatch) => {
-  dispatch(setIsLoadingPost(true));
+  dispatch(setIsLoading(true));
   return createAPI(title, body);
 };
 
 export const updatePost = (id, title, body) => (dispatch) => {
-  dispatch(setIsLoadingPost(true));
+  dispatch(setIsLoading(true));
   return updateAPI(id, title, body);
 };
 
 export const deletePost = (id) => (dispatch) => {
-  dispatch(setIsLoadingPost(true));
+  dispatch(setIsLoading(true));
   return deleteAPI(id);
 };
 
-export const selectIsLoadingPost = (state) => state.posts.isLoadingPost;
+export const selectPostIsLoading = (state) => state.posts.isLoading;
 export const selectPosts = (state) => state.posts.post;
 export const selectPost = (state) => state.posts.post;
 export const selectPages = (state) => state.posts.pages;

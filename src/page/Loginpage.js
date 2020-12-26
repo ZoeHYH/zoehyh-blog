@@ -7,39 +7,40 @@ import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import {
-  login,
-  selectIsLoadingUser,
-  setIsLoadingUser,
+  selectUserIsLoading,
+  selectUserStatus,
+  selectUserError,
+  verifyUser,
 } from "../redux/reducers/userReducer";
 import { getAuthToken, setAuthToken } from "../utils";
 import { Loading } from "../components/Loader";
 
 export default function LoginPage() {
   const dispatch = useDispatch();
-  const isLoading = useSelector(selectIsLoadingUser);
+  const status = useSelector(selectUserStatus);
+  const isLoading = useSelector(selectUserIsLoading);
+  const errorMessage = useSelector(selectUserError);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [errorMessage, setErrorMessage] = useState(null);
   const history = useHistory();
   const handleOnSubmit = (event) => {
-    dispatch(login(username, password)).then((data) => {
-      dispatch(setIsLoadingUser(false));
-      if (data.ok === 1) return history.push("/");
-      if (getAuthToken()) setAuthToken(null);
-      setErrorMessage(data.message);
-    });
     event.preventDefault();
+    dispatch(verifyUser({ goal: "login", username, password }));
+    if (status.login === "suceeded") return history.push("/");
+    if (getAuthToken()) setAuthToken(null);
   };
   return (
     <PageCenter>
       {isLoading && <Loading />}
-      <ErrorMessage>{errorMessage}</ErrorMessage>
+      <ErrorMessage>
+        {status.login === "failed" ? errorMessage : ""}
+      </ErrorMessage>
       <FormCard onSubmit={handleOnSubmit}>
         <Input
           content="帳號"
           type="text"
           name="username"
-          alert={errorMessage ? true : false}
+          alert={status.login === "failed"}
           value={username}
           handleOnChange={(value) => setUsername(value)}
         ></Input>
@@ -47,7 +48,7 @@ export default function LoginPage() {
           content="密碼"
           type="password"
           name="password"
-          alert={errorMessage ? true : false}
+          alert={status.login === "failed"}
           value={password}
           handleOnChange={(value) => setPassword(value)}
         ></Input>

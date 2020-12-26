@@ -4,8 +4,8 @@ import PropTypes from "prop-types";
 import { Link, useHistory, useLocation } from "react-router-dom";
 import { ButtonLink } from "./Button";
 import { useDispatch, useSelector } from "react-redux";
-import { deletePost, setIsLoadingPost } from "../redux/reducers/postReducer";
-import { selectIsLogin } from "../redux/reducers/userReducer";
+import { deletePost, selectPostIsLoading } from "../redux/reducers/postReducer";
+import { selectUser } from "../redux/reducers/userReducer";
 
 const ArticleContainer = styled.div`
   color: ${COLOR.primary};
@@ -62,11 +62,11 @@ const ArticleBar = styled.div`
 function ArticleActions({ id }) {
   const dispatch = useDispatch();
   const history = useHistory();
-  const isLogin = useSelector(selectIsLogin);
+  const isLogin = useSelector(selectUser);
   const handleDelete = () => {
     if (!isLogin) return;
     dispatch(deletePost(id)).then((data) => {
-      dispatch(setIsLoadingPost(false));
+      dispatch(selectPostIsLoading(false));
       if (data.ok === 0) return;
       history.push("/");
     });
@@ -88,7 +88,7 @@ ArticleActions.propTypes = {
 
 function ArticleContent({ post, paragraph }) {
   const location = useLocation();
-  const isLogin = useSelector(selectIsLogin);
+  const isLogin = useSelector(selectUser);
   const isShow = location.pathname !== "/about" && isLogin;
   return (
     <>

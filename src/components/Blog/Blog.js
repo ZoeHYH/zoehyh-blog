@@ -13,16 +13,16 @@ import {
   Redirect,
 } from "react-router-dom";
 import { useEffect } from "react";
-import { getUser, selectIsLogin } from "../../redux/reducers/userReducer";
+import { selectUser, verifyUser } from "../../redux/reducers/userReducer";
 import { useDispatch, useSelector } from "react-redux";
 import { getAuthToken } from "../../utils";
 import EditPage from "../../page/EditPage";
 
 export default function Blog() {
   const dispatch = useDispatch();
-  const isLogin = useSelector(selectIsLogin);
+  const isLogin = useSelector(selectUser);
   useEffect(() => {
-    if (getAuthToken()) dispatch(getUser());
+    if (getAuthToken()) dispatch(verifyUser({ goal: "verify" }));
   }, [dispatch]);
   return (
     <Router>

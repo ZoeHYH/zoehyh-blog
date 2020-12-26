@@ -3,7 +3,7 @@ import { Article } from "../components/Article";
 import { Page } from "../components/Page";
 import {
   getPost,
-  selectIsLoadingPost,
+  selectPostIsLoading,
   selectPost,
 } from "../redux/reducers/postReducer";
 import { useDispatch, useSelector } from "react-redux";
@@ -14,7 +14,7 @@ export default function ArticlePage() {
   const { id } = useParams();
   const history = useHistory();
   const dispatch = useDispatch();
-  const isLoading = useSelector(selectIsLoadingPost);
+  const isLoading = useSelector(selectPostIsLoading);
   const post = useSelector(selectPost);
   useEffect(() => {
     dispatch(getPost(id));

@@ -8,7 +8,7 @@ import { Loading } from "../components/Loader";
 import { LIST_LIMIT } from "../constants/variable";
 import {
   getPosts,
-  selectIsLoadingPost,
+  selectPostIsLoading,
   selectPages,
   selectPosts,
 } from "../redux/reducers/postReducer";
@@ -16,7 +16,7 @@ import {
 export default function ListPage() {
   let { page } = useParams();
   const dispatch = useDispatch();
-  const isLoading = useSelector(selectIsLoadingPost);
+  const isLoading = useSelector(selectPostIsLoading);
   const posts = useSelector(selectPosts);
   const pages = useSelector(selectPages);
   useEffect(() => {

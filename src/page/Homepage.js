@@ -5,13 +5,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { Loading } from "../components/Loader";
 import {
   getPosts,
-  selectIsLoadingPost,
+  selectPostIsLoading,
   selectPosts,
 } from "../redux/reducers/postReducer";
 
 export default function HomePage() {
   const dispatch = useDispatch();
-  const isLoading = useSelector(selectIsLoadingPost);
+  const isLoading = useSelector(selectPostIsLoading);
   const posts = useSelector(selectPosts);
   useEffect(() => {
     dispatch(getPosts());

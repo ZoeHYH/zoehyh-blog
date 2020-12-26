@@ -6,9 +6,10 @@ import { Input } from "../components/Input";
 import { PageCenter } from "../components/Page";
 import { useHistory } from "react-router-dom";
 import {
-  register,
-  selectIsLoadingUser,
-  setIsLoadingUser,
+  selectUserIsLoading,
+  selectUserStatus,
+  selectUserError,
+  verifyUser,
 } from "../redux/reducers/userReducer";
 import { useDispatch, useSelector } from "react-redux";
 import { getAuthToken, setAuthToken } from "../utils";
@@ -16,31 +17,31 @@ import { Loading } from "../components/Loader";
 
 export default function RegisterPage() {
   const dispatch = useDispatch();
-  const isLoading = useSelector(selectIsLoadingUser);
+  const status = useSelector(selectUserStatus);
+  const isLoading = useSelector(selectUserIsLoading);
+  const errorMessage = useSelector(selectUserError);
   const [nickname, setNickname] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [errorMessage, setErrorMessage] = useState(null);
   const history = useHistory();
   const handleOnSubmit = (event) => {
-    dispatch(register(nickname, username, password)).then((data) => {
-      dispatch(setIsLoadingUser(false));
-      if (data.ok === 1) return history.push("/");
-      if (getAuthToken()) setAuthToken(null);
-      setErrorMessage(data.message);
-    });
     event.preventDefault();
+    dispatch(verifyUser({ goal: "register", nickname, username, password }));
+    if (status.register === "suceeded") return history.push("/");
+    if (getAuthToken()) setAuthToken(null);
   };
   return (
     <PageCenter>
       {isLoading && <Loading />}
-      <ErrorMessage>{errorMessage}</ErrorMessage>
+      <ErrorMessage>
+        {status.register === "failed" ? errorMessage : ""}
+      </ErrorMessage>
       <FormCard onSubmit={handleOnSubmit}>
         <Input
           content="暱稱"
           type="text"
           name="nickname"
-          alert={errorMessage ? true : false}
+          alert={status.register === "failed"}
           value={nickname}
           handleOnChange={(value) => setNickname(value)}
         ></Input>
@@ -48,7 +49,7 @@ export default function RegisterPage() {
           content="帳號"
           type="text"
           name="username"
-          alert={errorMessage ? true : false}
+          alert={status.register === "failed"}
           value={username}
           handleOnChange={(value) => setUsername(value)}
         ></Input>
@@ -56,7 +57,7 @@ export default function RegisterPage() {
           content="密碼"
           type="password"
           name="password"
-          alert={errorMessage ? true : false}
+          alert={status.register === "failed"}
           value={password}
           handleOnChange={(value) => setPassword(value)}
         ></Input>

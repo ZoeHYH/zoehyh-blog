@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { Link, useHistory, useLocation } from "react-router-dom";
 import { ButtonLink } from "./Button";
 import { useDispatch, useSelector } from "react-redux";
-import { deletePost, selectPostIsLoading } from "../redux/reducers/postReducer";
+import { deletePost, setIsLoading } from "../redux/reducers/postReducer";
 import { selectUser } from "../redux/reducers/userReducer";
 
 const ArticleContainer = styled.div`
@@ -66,9 +66,10 @@ function ArticleActions({ id }) {
   const handleDelete = () => {
     if (!isLogin) return;
     dispatch(deletePost(id)).then((data) => {
-      dispatch(selectPostIsLoading(false));
+      dispatch(setIsLoading(false));
       if (data.ok === 0) return;
       history.push("/");
+      history.goBack();
     });
   };
   return (

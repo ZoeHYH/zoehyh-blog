@@ -9,6 +9,7 @@ import {
   selectPostIsLoading,
   selectPost,
   updatePost,
+  setIsLoading,
 } from "../redux/reducers/postReducer";
 import { useHistory, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -37,7 +38,7 @@ export default function EditPage() {
     event.preventDefault();
     if (!isLogin) return history.push("/");
     dispatch(updatePost(id, title, body)).then((data) => {
-      dispatch(selectPostIsLoading(false));
+      dispatch(setIsLoading(false));
       if (data.ok === 0) return setErrorMessage(data.message);
       history.push(`/article-${data.id}`);
     });

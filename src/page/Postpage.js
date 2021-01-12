@@ -4,10 +4,11 @@ import { FormPage } from "../components/Form";
 import { useState } from "react";
 import { Button } from "../components/Button";
 import { ErrorMessage } from "../components/ErrorMessage";
-import { createPost, selectPostIsLoading } from "../redux/reducers/postReducer";
+import { createPost, setIsLoading } from "../redux/reducers/postReducer";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { selectUser } from "../redux/reducers/userReducer";
+import { selectUser, selectUserIsLoading } from "../redux/reducers/userReducer";
+import { Loading } from "../components/Loader";
 
 export default function PostPage() {
   const dispatch = useDispatch();
@@ -16,10 +17,11 @@ export default function PostPage() {
   const [body, setBody] = useState("");
   const [errorMessage, setErrorMessage] = useState(null);
   const isLogin = useSelector(selectUser);
+  const isLoading = useSelector(selectUserIsLoading);
   const handleOnSubmit = (event) => {
     if (!isLogin) return history.push("/");
     dispatch(createPost(title, body)).then((data) => {
-      dispatch(selectPostIsLoading(false));
+      dispatch(setIsLoading(false));
       if (data.ok === 0) return setErrorMessage(data.message);
       history.push(`/article-${data.id}`);
     });
@@ -27,6 +29,7 @@ export default function PostPage() {
   };
   return (
     <Page>
+      {isLoading && <Loading />}
       <ErrorMessage>{errorMessage}</ErrorMessage>
       <FormPage onSubmit={handleOnSubmit}>
         <Input

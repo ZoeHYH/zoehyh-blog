@@ -4,7 +4,7 @@ import { defaultImage, LIST_LIMIT } from "../constants/variable";
 import { selectPages, selectPosts } from "../redux/reducers/postReducer";
 import {
   Container,
-  HeadBlock,
+  BetweenBlock,
   Main,
   Section,
   Wrapper,
@@ -25,9 +25,9 @@ export default function ListPage() {
         <H1>部落格</H1>
         <H1>文章列表</H1>
         <Section>
-          <HeadBlock>
+          <BetweenBlock>
             <H3 $grey500>全部</H3>
-          </HeadBlock>
+          </BetweenBlock>
           <Container $list as="ul">
             {posts &&
               posts

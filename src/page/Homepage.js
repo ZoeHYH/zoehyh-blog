@@ -4,7 +4,7 @@ import {
   Section,
   Wrapper,
   ScrollContainer,
-  HeadBlock,
+  BetweenBlock,
   Container,
 } from "../components/Layout";
 import { useSelector } from "react-redux";
@@ -69,10 +69,10 @@ export default function HomePage() {
           </Container>
         </Section>
         <Section>
-          <HeadBlock>
+          <BetweenBlock>
             <H3 $grey500>最新文章</H3>
             <ArrowLink to={"/list"} label={"看看所有文章"} />
-          </HeadBlock>
+          </BetweenBlock>
           <Container as="ul">
             {posts &&
               posts

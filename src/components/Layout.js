@@ -78,7 +78,7 @@ export const Block = styled.div`
   }
 `;
 
-export const HeadBlock = styled.div`
+export const BetweenBlock = styled.div`
   ${FlexBetweenCenter}
   ${({ theme }) => theme.media.md} {
     flex-direction: column;
@@ -119,8 +119,8 @@ export const ArticleBlock = styled.div`
 
 export const Ul = styled.ul`
   & > li ~ li {
-    ${({ medium }) => medium && `margin-top: 1.5rem;`}
-    ${({ small }) => small && `margin-top: 1rem;`}
+    ${({ $medium }) => $medium && `margin-top: 1.5rem;`}
+    ${({ $small }) => $small && `margin-top: 1rem;`}
   }
 `;
 

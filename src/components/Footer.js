@@ -1,9 +1,9 @@
 import styled from "styled-components";
-import { Wrapper, Ul, Block, BetweenBlock } from "./Layout";
+import { Wrapper, Ul, BetweenBlock } from "./Layout";
 import { H1, H5, H7 } from "./Text";
 import { StyledLink } from "./Link";
 
-export const StyledFooter = styled.div`
+const StyledFooter = styled.div`
   background: ${({ theme }) => theme.color.grey[100]};
   margin-top: 8rem;
   & > div {
@@ -36,14 +36,6 @@ export const StyledFooter = styled.div`
     }
     & .copyright {
       text-align: left;
-    }
-  }
-`;
-
-export const StyledBlock = styled(Block)`
-  ${({ theme }) => theme.media.md} {
-    & > * ~ * {
-      margin-top: 1rem;
     }
   }
 `;

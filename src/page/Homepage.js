@@ -45,25 +45,21 @@ export default function HomePage() {
         <Section>
           <Container>
             <Block>
-              <H3>
-                前端工程師 Frontend Developer
+              <div>
+                <H3>前端工程師</H3>
                 <br />
-                Simple but profound.
-              </H3>
+                <H3>Simple but profound.</H3>
+              </div>
               <ArrowLink
                 to={"/about"}
                 className={"link"}
-                label={"我想了解更多"}
+                label={"更多關於我的事情"}
                 $hide
               />
             </Block>
             <Block>
               <H4 as="p" $grey700>
-                使用 React 與 Redux 建立網站，喜歡將網站的重複元素拆解成多個
-                Components。
-                <br />
-                另外也能使用 Node.js 與 Express 建構後端，部屬於 AWS，並使用
-                Nginx 反向代理。
+                {`使用 React 與 Redux 建立網站，喜歡將網站的重複元素拆解成多個 Components。\n\n同時使用 Express.js 與 Node.js 建構後端，部屬於AWS，並使用 Nginx 反向代理。`}
               </H4>
             </Block>
           </Container>

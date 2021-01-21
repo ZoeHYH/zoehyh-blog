@@ -20,20 +20,20 @@ const register = async ({ nickname, username, password }) => {
 
 export const verifyUser = createAsyncThunk(
   "user/verify",
-  async (data, { rejectWithValue }) => {
+  async ({ goal, ...data }, { rejectWithValue }) => {
     try {
-      if (data.goal === "register") {
+      if (goal === "register") {
         await register(data);
-      } else if (data.goal === "login") {
+      } else if (goal === "login") {
         await login(data);
       }
       const response = await getUserAPI();
       if (!response.ok) throw new Error(response.message);
-      return { goal: data.goal, data: response.data };
+      return response.data;
     } catch (error) {
       return rejectWithValue({
-        goal: data.goal,
-        message: error.message ? error.message : "失敗",
+        goal,
+        error: error.message ? error.message : "失敗",
       });
     }
   }
@@ -42,33 +42,38 @@ export const verifyUser = createAsyncThunk(
 export const userReducer = createSlice({
   name: "user",
   initialState: {
-    status: { verify: "idle", login: "idle", register: "idle" },
-    isLoading: false,
+    status: "idle",
     user: null,
     error: null,
   },
-  reducers: {},
+  reducers: {
+    resetUserStatus: (state, action) => {
+      state.status = "logout";
+    },
+    resetUser: (state, action) => {
+      state.user = null;
+    },
+  },
   extraReducers: {
     [verifyUser.pending]: (state, action) => {
-      state.isLoading = true;
+      state.status = "loading";
     },
     [verifyUser.fulfilled]: (state, action) => {
-      state.status[action.payload.goal] = "succeeded";
-      state.isLoading = false;
-      state.user = action.payload.data;
+      state.status = "succeeded";
+      state.user = action.payload;
     },
     [verifyUser.rejected]: (state, action) => {
-      state.status[action.payload.goal] = "failed";
-      state.isLoading = false;
-      state.user = null;
-      state.error = action.payload.message;
+      if (action.payload.goal === "verify") state.status = "logout";
+      else state.status = "failed";
+      state.error = action.payload.error;
     },
   },
 });
 
-export const selectUser = (store) => store.user.user;
-export const selectUserStatus = (store) => store.user.status;
-export const selectUserIsLoading = (store) => store.user.isLoading;
-export const selectUserError = (store) => store.user.error;
+export const { resetUserStatus, resetUser } = userReducer.actions;
+
+export const selectUser = (state) => state.user.user;
+export const selectUserStatus = (state) => state.user.status;
+export const selectUserError = (state) => state.user.error;
 
 export default userReducer.reducer;

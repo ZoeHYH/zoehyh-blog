@@ -4,7 +4,7 @@ import userReducer from "./reducers/userReducer";
 
 export default configureStore({
   reducer: {
-    posts: postReducer,
+    post: postReducer,
     user: userReducer,
   },
 });

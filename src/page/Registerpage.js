@@ -1,68 +1,87 @@
-import { useState } from "react";
-import { FormCard } from "../components/Form";
-import { ErrorMessage } from "../components/ErrorMessage";
-import { Button } from "../components/Button";
+import { useEffect, useState } from "react";
+import { ArrowButton } from "../components/Button";
 import { Input } from "../components/Input";
-import { PageCenter } from "../components/Page";
 import { useHistory } from "react-router-dom";
 import {
-  selectUserIsLoading,
   selectUserStatus,
   selectUserError,
   verifyUser,
+  resetUserStatus,
 } from "../redux/reducers/userReducer";
 import { useDispatch, useSelector } from "react-redux";
-import { getAuthToken, setAuthToken } from "../utils";
-import { Loading } from "../components/Loader";
+import { setAuthToken } from "../utils";
+import { ArticleBlock, Form, Main, Wrapper } from "../components/Layout";
+import { H1, H7 } from "../components/Text";
 
 export default function RegisterPage() {
   const dispatch = useDispatch();
   const status = useSelector(selectUserStatus);
-  const isLoading = useSelector(selectUserIsLoading);
-  const errorMessage = useSelector(selectUserError);
+  const error = useSelector(selectUserError);
   const [nickname, setNickname] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const history = useHistory();
+
   const handleOnSubmit = (event) => {
     event.preventDefault();
     dispatch(verifyUser({ goal: "register", nickname, username, password }));
-    if (status.register === "suceeded") return history.push("/");
-    if (getAuthToken()) setAuthToken(null);
   };
+
+  useEffect(() => {
+    if (status === "suceeded") return history.push("/");
+    if (status === "failed") setAuthToken(null);
+  }, [status, history]);
+
+  useEffect(() => {
+    return () => {
+      if (status === "failed") dispatch(resetUserStatus());
+    };
+  }, [status, dispatch]);
+
   return (
-    <PageCenter>
-      {isLoading && <Loading />}
-      <ErrorMessage>
-        {status.register === "failed" ? errorMessage : ""}
-      </ErrorMessage>
-      <FormCard onSubmit={handleOnSubmit}>
-        <Input
-          content="暱稱"
-          type="text"
-          name="nickname"
-          alert={status.register === "failed"}
-          value={nickname}
-          handleOnChange={(value) => setNickname(value)}
-        ></Input>
-        <Input
-          content="帳號"
-          type="text"
-          name="username"
-          alert={status.register === "failed"}
-          value={username}
-          handleOnChange={(value) => setUsername(value)}
-        ></Input>
-        <Input
-          content="密碼"
-          type="password"
-          name="password"
-          alert={status.register === "failed"}
-          value={password}
-          handleOnChange={(value) => setPassword(value)}
-        ></Input>
-        <Button>{"註冊"}</Button>
-      </FormCard>
-    </PageCenter>
+    <Main>
+      <Wrapper>
+        <ArticleBlock>
+          <Wrapper $small>
+            <H1 className={"title"}>登入部落格</H1>
+            <Form className={"content"} onSubmit={handleOnSubmit}>
+              <Input
+                title="暱稱"
+                type="text"
+                name="nickname"
+                placeholder={"取一個暱稱吧"}
+                value={nickname}
+                handleOnChange={(value) => setNickname(value)}
+                alert={status === "failed"}
+                required
+              />
+              <Input
+                title="帳號"
+                type="text"
+                name="username"
+                placeholder={"設定帳號"}
+                value={username}
+                handleOnChange={(value) => setUsername(value)}
+                alert={status === "failed"}
+                required
+              />
+              <Input
+                title="密碼"
+                type="password"
+                name="password"
+                placeholder={"設定密碼"}
+                value={password}
+                handleOnChange={(value) => setPassword(value)}
+                alert={status === "failed"}
+                required
+              />
+              <H7 $error>{status === "failed" && error}</H7>
+              <ArrowButton text={"註冊"} />
+              <ArrowButton text={"登入"} />
+            </Form>
+          </Wrapper>
+        </ArticleBlock>
+      </Wrapper>
+    </Main>
   );
 }

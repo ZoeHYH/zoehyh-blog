@@ -1,103 +1,137 @@
-import styled from "styled-components";
-import { COLOR, EFFECT, FONT } from "../constants/style";
+import styled, { css } from "styled-components";
 import PropTypes from "prop-types";
-import { Link, useRouteMatch } from "react-router-dom";
-
-const ButtonUnderlineHover = styled.button`
-  background: none;
-  border: none;
-  display: inline-block;
-  cursor: pointer;
-  text-decoration: none;
-  color: ${COLOR.primary};
-  font-size: inherit;
-  font-weight: bold;
-  padding: 10px;
-  & span {
-    z-index: 1;
-    position: relative;
-  }
-  & span::before {
-    z-index: -1;
-    content: "";
-    display: block;
-    background: ${COLOR.primaryLight};
-    transition: width 0.3s ease-in-out;
-    position: absolute;
-    height: 50%;
-    width: 0;
-    left: 10%;
-    bottom: -10%;
-  }
-  &:hover span::before,
-  &.active span::before,
-  &:focus span::before {
-    width: 100%;
-  }
-`;
-
-export function ButtonLink({ isActive, content }) {
-  return (
-    <ButtonUnderlineHover className={isActive ? "active" : ""}>
-      <span>{content}</span>
-    </ButtonUnderlineHover>
-  );
-}
-
-ButtonLink.propTypes = {
-  isActive: PropTypes.bool,
-  content: PropTypes.string,
-};
+import { Transition } from "./Animation";
+import { Line } from "./Line";
+import { StyledH5 } from "./Text";
+import { ReactComponent as Arrow } from "../image/arrow.svg";
+import { FlexBetweenCenter } from "./Layout";
 
 export const Button = styled.button`
-  z-index: 1;
-  ${EFFECT.block}
-  font-size: ${FONT.md};
-  font-weight: bold;
+  ${StyledH5}
+  word-break: keep-all;
+  padding: 0.5rem 2.5rem;
   position: relative;
-  box-shadow: ${EFFECT.shadowDark};
+  color: ${({ theme }) => theme.color.white};
+  background: ${({ theme }) => theme.color.grey[700]};
+  ${Transition}
+  ${FlexBetweenCenter}
   &:hover {
-    color: ${COLOR.white};
-    font-weight: normal;
-  }
-  &::before {
-    z-index: -1;
-    content: "";
-    display: block;
-    background: ${COLOR.primaryDark};
-    transition: width 0.3s ease-in-out;
-    position: absolute;
-    height: 100%;
-    width: 0;
-    left: 0;
-    top: 0;
-  }
-  &:hover::before {
-    width: 100%;
+    background: ${({ theme }) => theme.color.black};
   }
   &:active {
     box-shadow: none;
+    background: ${({ theme }) => theme.color.primaryDark};
   }
+  & svg {
+    margin-left: 0.5rem;
+    margin-bottom: 1px;
+    stroke: ${({ theme }) => theme.color.white};
+    width: 1.25rem;
+  }
+  ${({ $alert }) =>
+    $alert &&
+    css`
+      padding: 0.25rem 1rem;
+      color: ${({ theme }) => theme.color.grey[500]};
+      background: transparent;
+      border: 1px solid ${({ theme }) => theme.color.grey[500]};
+      &:hover {
+        background: transparent;
+        color: ${({ theme }) => theme.color.error};
+        border: 1px solid ${({ theme }) => theme.color.error};
+      }
+    `}
 `;
 
-export function Nav({ to, isExact, label }) {
-  const match = useRouteMatch({
-    path: to,
-    exact: isExact,
-  });
-  return (
-    <Link to={to}>
-      <ButtonLink isActive={match ? true : false} content={label} />
-    </Link>
-  );
-}
+export const ArrowButton = ({ text, handleOnClick, value }) => (
+  <Button onClick={handleOnClick} value={value}>
+    {text}
+    <Arrow />
+  </Button>
+);
 
-Nav.propTypes = {
-  to: PropTypes.string,
-  isExact: PropTypes.bool,
-  label: PropTypes.string,
+ArrowButton.propTypes = {
+  text: PropTypes.string,
+  handleOnClick: PropTypes.func,
+  value: PropTypes.string,
 };
 
 export const Pagination = styled.div`
   text-align: center;
+`;
+
+export const Hamburger = styled.div`
+  ${Transition}
+  display: block;
+  position: relative;
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0.5rem;
+  cursor: pointer;
+  & div,
+  & div::before,
+  & div::after {
+    background: ${({ theme }) => theme.color.grey[500]};
+    position: absolute;
+    ${Line}
+    width: 1.5rem;
+  }
+  & div {
+    ${({ theme, $active }) =>
+      $active
+        ? `background: transparent;`
+        : css`
+            background: ${theme.color.grey[500]};
+          `}
+    display: block;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: background-color 0.125s 0.175s ease-in-out;
+  }
+  & div::before {
+    content: "";
+    top: -0.5rem;
+    left: 0;
+    transition: transform 0.1s cubic-bezier(0.6, 0.04, 0.98, 0.335),
+      top 0.1s 0.2s linear, left 0.2s 0.3s ease-in;
+    transition: all 0.2s ease-in-out;
+    ${({ $active }) =>
+      $active &&
+      `left: -2rem;
+        top: 2rem;
+        transform: translate3d(2rem, -2rem, 0) rotate(-45deg);
+        transition: left 0.2s ease-out, top 0.1s 0.2s linear,
+          transform 0.2s 0.3s cubic-bezier(0.075, 0.82, 0.165, 1);
+  `}
+  }
+  & div::after {
+    content: "";
+    top: 0.5rem;
+    right: 0;
+    transition: transform 0.2s cubic-bezier(0.6, 0.04, 0.98, 0.335),
+      top 0.1s 0.2s linear, right 0.2s 0.3s ease-in;
+    transition: all 0.2s ease-in-out;
+    ${({ $active }) =>
+      $active &&
+      `right: -2rem;
+        top: 2rem;
+        transform: translate3d(-2rem, -2rem, 0) rotate(45deg);
+        transition: right 0.2s ease-out, top 0.1s 0.2s linear,
+          transform 0.2s 0.3s cubic-bezier(0.075, 0.82, 0.165, 1);
+
+      `}
+  }
+  &:hover div {
+    ${({ theme, $active }) =>
+      $active
+        ? `background: transparent;`
+        : css`
+            background: ${theme.color.primary};
+          `}
+  }
+  &:hover div::before,
+  &:hover div::after {
+    background: ${({ theme }) => theme.color.primary};
+  }
 `;

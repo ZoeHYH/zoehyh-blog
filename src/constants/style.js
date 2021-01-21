@@ -8,6 +8,7 @@ export const COLOR = {
 };
 export const MEDIA = {
   sm: "@media (max-width: 381px)",
+  md: "@media (max-width: 600px)",
 };
 
 export const DISTENCE = {

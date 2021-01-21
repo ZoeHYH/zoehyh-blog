@@ -1,73 +1,110 @@
-import { Input } from "../components/Input";
-import { Page } from "../components/Page";
-import { FormPage } from "../components/Form";
+import { FileInput, Input, Select, Textarea } from "../components/Input";
 import { useEffect, useState } from "react";
 import { Button } from "../components/Button";
-import { ErrorMessage } from "../components/ErrorMessage";
 import {
   getPost,
-  selectPostIsLoading,
   selectPost,
   updatePost,
-  setIsLoading,
+  selectPostError,
+  selectPostStatus,
+  selectPostById,
+  resetPostStatus,
 } from "../redux/reducers/postReducer";
 import { useHistory, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { selectUser } from "../redux/reducers/userReducer";
-import { Loading } from "../components/Loader";
+import { ArticleBlock, Form, Main, Wrapper } from "../components/Layout";
+import { H1, H7 } from "../components/Text";
 
 export default function EditPage() {
   const { id } = useParams();
   const dispatch = useDispatch();
   const history = useHistory();
-  const post = useSelector(selectPost);
-  const [errorMessage, setErrorMessage] = useState(null);
-  const isLogin = useSelector(selectUser);
-  const isLoading = useSelector(selectPostIsLoading);
+  const postById = useSelector((state) => selectPostById(state, id));
+  const postByFetch = useSelector(selectPost);
+  const error = useSelector(selectPostError);
+  const status = useSelector(selectPostStatus);
   const [title, setTitle] = useState("");
+  const [category, setCategory] = useState("");
   const [body, setBody] = useState("");
+  const [url, setUrl] = useState("https://i.imgur.com/rPYnKjx.jpg");
 
   useEffect(() => {
-    dispatch(getPost(id));
-  }, [id, dispatch]);
+    if (!postById && !postByFetch) dispatch(getPost(id));
+  }, [postById, postByFetch, id, dispatch]);
+
+  const post = postById || postByFetch;
+
+  if (status !== "loading" && !post) history.push("/");
+
   useEffect(() => {
-    setTitle(post[0].title);
-    setBody(post[0].body);
-  }, [post]);
+    if (post) {
+      setTitle(post.title);
+      setBody(post.body);
+    }
+  }, [post, dispatch]);
+
   const handleOnSubmit = (event) => {
     event.preventDefault();
-    if (!isLogin) return history.push("/");
-    dispatch(updatePost(id, title, body)).then((data) => {
-      dispatch(setIsLoading(false));
-      if (data.ok === 0) return setErrorMessage(data.message);
-      history.push(`/article-${data.id}`);
-    });
+    dispatch(updatePost({ id, title, body }));
   };
+
+  useEffect(() => {
+    if (status === "succeeded") history.push(`/article-${post.id}`);
+  }, [status, dispatch, history, post]);
+
+  useEffect(() => {
+    return () => {
+      dispatch(resetPostStatus());
+    };
+  }, [dispatch]);
+
   return (
-    <Page>
-      {isLoading && <Loading />}
-      <ErrorMessage>{errorMessage}</ErrorMessage>
-      {post && (
-        <FormPage onSubmit={handleOnSubmit}>
-          <Input
-            content="標題"
-            type="text"
-            name="title"
-            alert={errorMessage ? true : false}
-            value={title}
-            handleOnChange={(value) => setTitle(value)}
-          />
-          <Input
-            content="內文"
-            type="textarea"
-            name="body"
-            alert={errorMessage ? true : false}
-            value={body}
-            handleOnChange={(value) => setBody(value)}
-          />
-          <Button>修改</Button>
-        </FormPage>
-      )}
-    </Page>
+    <Main>
+      <Wrapper>
+        <ArticleBlock>
+          <H1 className={"title"}>發布文章</H1>
+          {post && (
+            <>
+              <FileInput value={url} handleUrl={(value) => setUrl(value)} />
+              <Wrapper $small className={"content"}>
+                <Form onSubmit={handleOnSubmit}>
+                  <Input
+                    title="標題"
+                    type="text"
+                    name="title"
+                    value={title}
+                    handleOnChange={(value) => setTitle(value)}
+                    alert={status === "failed"}
+                    required
+                  />
+                  <Select
+                    title={"類別"}
+                    name={"category"}
+                    options={[
+                      { name: "程式", value: "Code" },
+                      { name: "設計", value: "Design" },
+                    ]}
+                    value={category}
+                    handleValue={(value) => setCategory(value)}
+                    alert={status === "failed"}
+                    required
+                  />
+                  <Textarea
+                    title="內文"
+                    name="body"
+                    value={body}
+                    handleOnChange={(value) => setBody(value)}
+                    alert={status === "failed"}
+                    required
+                  />
+                  <H7 $error>{error}</H7>
+                  <Button>修改完成！</Button>
+                </Form>
+              </Wrapper>
+            </>
+          )}
+        </ArticleBlock>
+      </Wrapper>
+    </Main>
   );
 }

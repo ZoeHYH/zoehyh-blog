@@ -1,59 +1,75 @@
-import { FormCard } from "../components/Form";
-import { ErrorMessage } from "../components/ErrorMessage";
-import { Button } from "../components/Button";
+import { ArrowButton } from "../components/Button";
 import { Input } from "../components/Input";
-import { PageCenter } from "../components/Page";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
-  selectUserIsLoading,
   selectUserStatus,
   selectUserError,
   verifyUser,
+  resetUserStatus,
 } from "../redux/reducers/userReducer";
-import { getAuthToken, setAuthToken } from "../utils";
-import { Loading } from "../components/Loader";
+import { setAuthToken } from "../utils";
+import { H1, H7 } from "../components/Text";
+import { ArticleBlock, Form, Main, Wrapper } from "../components/Layout";
 
 export default function LoginPage() {
   const dispatch = useDispatch();
   const status = useSelector(selectUserStatus);
-  const isLoading = useSelector(selectUserIsLoading);
-  const errorMessage = useSelector(selectUserError);
+  const error = useSelector(selectUserError);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const history = useHistory();
+
   const handleOnSubmit = (event) => {
     event.preventDefault();
     dispatch(verifyUser({ goal: "login", username, password }));
-    if (status.login === "suceeded") return history.push("/");
-    if (getAuthToken()) setAuthToken(null);
   };
+
+  useEffect(() => {
+    if (status === "suceeded") return history.push("/");
+    if (status === "failed") setAuthToken(null);
+  }, [status, history]);
+
+  useEffect(() => {
+    return () => {
+      if (status === "failed") dispatch(resetUserStatus());
+    };
+  }, [status, dispatch]);
+
   return (
-    <PageCenter>
-      {isLoading && <Loading />}
-      <ErrorMessage>
-        {status.login === "failed" ? errorMessage : ""}
-      </ErrorMessage>
-      <FormCard onSubmit={handleOnSubmit}>
-        <Input
-          content="帳號"
-          type="text"
-          name="username"
-          alert={status.login === "failed"}
-          value={username}
-          handleOnChange={(value) => setUsername(value)}
-        ></Input>
-        <Input
-          content="密碼"
-          type="password"
-          name="password"
-          alert={status.login === "failed"}
-          value={password}
-          handleOnChange={(value) => setPassword(value)}
-        ></Input>
-        <Button>登入</Button>
-      </FormCard>
-    </PageCenter>
+    <Main>
+      <Wrapper>
+        <ArticleBlock>
+          <Wrapper $small>
+            <H1 className={"title"}>登入部落格</H1>
+            <Form className={"content"} onSubmit={handleOnSubmit}>
+              <Input
+                title="帳號"
+                type="text"
+                name="username"
+                placeholder={"輸入你的帳號吧"}
+                value={username}
+                handleOnChange={(value) => setUsername(value)}
+                alert={status === "failed"}
+                required
+              ></Input>
+              <Input
+                title="密碼"
+                type="password"
+                name="password"
+                placeholder={"輸入密碼"}
+                value={password}
+                handleOnChange={(value) => setPassword(value)}
+                alert={status === "failed"}
+                required
+              ></Input>
+              <H7 $error>{status === "failed" && error}</H7>
+              <ArrowButton text={"登入"} />
+            </Form>
+          </Wrapper>
+        </ArticleBlock>
+      </Wrapper>
+    </Main>
   );
 }

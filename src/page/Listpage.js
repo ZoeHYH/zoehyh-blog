@@ -39,7 +39,7 @@ export default function ListPage() {
                     to={`/article-${post.id}`}
                     post={post}
                     $width={"48%"}
-                    $image={"https://i.imgur.com/rPYnKjx.jpg"}
+                    $image={"https://i.imgur.com/Fy21EsI.jpg"}
                   />
                 ))}
           </Container>

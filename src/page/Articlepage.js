@@ -60,7 +60,7 @@ export default function ArticlePage() {
             <div className={"banner"}>
               <Image
                 $height={"500px"}
-                $image={"https://i.imgur.com/rPYnKjx.jpg"}
+                $image={"https://i.imgur.com/Fy21EsI.jpg"}
               />
             </div>
             <Wrapper $medium className={"content"}>

@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { LIST_LIMIT } from "../constants/variable";
+import { defaultImage, LIST_LIMIT } from "../constants/variable";
 import { selectPages, selectPosts } from "../redux/reducers/postReducer";
 import {
   Container,
@@ -39,7 +39,7 @@ export default function ListPage() {
                     to={`/article-${post.id}`}
                     post={post}
                     $width={"48%"}
-                    $image={"https://i.imgur.com/LmwJdsm.jpg"}
+                    $image={defaultImage}
                   />
                 ))}
           </Container>

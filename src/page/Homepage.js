@@ -12,6 +12,7 @@ import { selectPosts } from "../redux/reducers/postReducer";
 import { H1, H3, H4 } from "../components/Text";
 import { ArrowLink } from "../components/Link";
 import { Card, ImageCard } from "../components/Card";
+import { defaultImage } from "../constants/variable";
 
 export default function HomePage() {
   const posts = useSelector(selectPosts);
@@ -35,7 +36,7 @@ export default function HomePage() {
                   to={`/article-${post.id}`}
                   post={post}
                   $square={"40vmax"}
-                  $image={"https://i.imgur.com/LmwJdsm.jpg"}
+                  $image={defaultImage}
                 />
               ))}
         </ScrollContainer>
@@ -45,9 +46,9 @@ export default function HomePage() {
           <Container>
             <Block>
               <H3>
-                前端工程師
+                前端工程師 Frontend Developer
                 <br />
-                我覺得你可以更靠近一點
+                Simple but profound.
               </H3>
               <ArrowLink
                 to={"/about"}
@@ -58,11 +59,11 @@ export default function HomePage() {
             </Block>
             <Block>
               <H4 as="p" $grey700>
-                使用 React 前端使用 React 前端使用 React 前端使用 React 前端使用
-                React 前端使用 React 前端使用 React 前端使用 React 前端
+                使用 React 與 Redux 建立網站，喜歡將網站的重複元素拆解成多個
+                Components。
                 <br />
-                使用 React 前端使用 React 前端使用 React 前端使用 React 前端使用
-                React 前端使用 React 前端使用 React 前端
+                另外也能使用 Node.js 與 Express 建構後端，部屬於 AWS，並使用
+                Nginx 反向代理。
               </H4>
             </Block>
           </Container>
@@ -83,7 +84,7 @@ export default function HomePage() {
                     to={`/article-${post.id}`}
                     post={post}
                     $width={"32%"}
-                    $image={"https://i.imgur.com/LmwJdsm.jpg"}
+                    $image={defaultImage}
                   />
                 ))}
           </Container>

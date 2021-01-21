@@ -16,6 +16,7 @@ import { H1, H4, H5 } from "../components/Text";
 import { Button } from "../components/Button";
 import { ArrowLink } from "../components/Link";
 import { selectUserStatus } from "../redux/reducers/userReducer";
+import { defaultImage } from "../constants/variable";
 
 export default function ArticlePage() {
   const { id } = useParams();
@@ -58,10 +59,7 @@ export default function ArticlePage() {
               {new Date(post.createdAt).toLocaleString()}
             </H5>
             <div className={"banner"}>
-              <Image
-                $height={"32rem"}
-                $image={"https://i.imgur.com/LmwJdsm.jpg"}
-              />
+              <Image $height={"32rem"} $image={defaultImage} />
             </div>
             <Wrapper $medium className={"content"}>
               <H4 as="p">

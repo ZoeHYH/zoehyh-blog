@@ -11,7 +11,6 @@ import { Image } from "./Image";
 import UploadUrl from "../image/upload.svg";
 import { deleteImage, uploadImage } from "../WebAPI";
 import { FlexCenter, Wrapper } from "./Layout";
-import { Loader } from "./Loader";
 import LogoAnimated from "../image/logo_animated.svg";
 
 const StyledSearchInput = styled.form`

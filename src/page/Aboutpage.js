@@ -2,6 +2,7 @@ import { Image } from "../components/Image";
 import { ArticleBlock, Main, Wrapper } from "../components/Layout";
 import { H1, H4, H5 } from "../components/Text";
 import { ABOUT } from "../constants/text";
+import { defaultImage } from "../constants/variable";
 
 export default function AboutPage() {
   return (
@@ -14,10 +15,7 @@ export default function AboutPage() {
             {new Date(ABOUT.createdAt).toLocaleString()}
           </H5>
           <div className={"banner"}>
-            <Image
-              $height={"32rem"}
-              $image={"https://i.imgur.com/LmwJdsm.jpg"}
-            />
+            <Image $height={"32rem"} $image={defaultImage} />
           </div>
           <Wrapper $medium className={"content"}>
             <H4 as="p">{ABOUT.body}</H4>

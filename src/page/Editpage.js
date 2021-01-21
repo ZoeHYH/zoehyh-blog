@@ -14,6 +14,7 @@ import { useHistory, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { ArticleBlock, Form, Main, Wrapper } from "../components/Layout";
 import { H1, H7 } from "../components/Text";
+import { defaultImage } from "../constants/variable";
 
 export default function EditPage() {
   const { id } = useParams();
@@ -26,7 +27,7 @@ export default function EditPage() {
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("");
   const [body, setBody] = useState("");
-  const [url, setUrl] = useState("https://i.imgur.com/LmwJdsm.jpg");
+  const [url, setUrl] = useState(defaultImage);
 
   useEffect(() => {
     if (!postById && !postByFetch) dispatch(getPost(id));

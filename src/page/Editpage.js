@@ -26,7 +26,7 @@ export default function EditPage() {
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("");
   const [body, setBody] = useState("");
-  const [url, setUrl] = useState("https://i.imgur.com/Fy21EsI.jpg");
+  const [url, setUrl] = useState("https://i.imgur.com/LmwJdsm.jpg");
 
   useEffect(() => {
     if (!postById && !postByFetch) dispatch(getPost(id));

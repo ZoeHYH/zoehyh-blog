@@ -35,7 +35,7 @@ export default function HomePage() {
                   to={`/article-${post.id}`}
                   post={post}
                   $square={"40vmax"}
-                  $image={"https://i.imgur.com/Fy21EsI.jpg"}
+                  $image={"https://i.imgur.com/LmwJdsm.jpg"}
                 />
               ))}
         </ScrollContainer>
@@ -83,7 +83,7 @@ export default function HomePage() {
                     to={`/article-${post.id}`}
                     post={post}
                     $width={"32%"}
-                    $image={"https://i.imgur.com/Fy21EsI.jpg"}
+                    $image={"https://i.imgur.com/LmwJdsm.jpg"}
                   />
                 ))}
           </Container>

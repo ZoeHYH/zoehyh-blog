@@ -271,7 +271,7 @@ const StyledFileInput = styled.div`
   & .uploader {
     ${FlexCenter}
     ${Transition}
-    height: 500px;
+    height: 32rem;
     background: url(${UploadUrl}) center/20% no-repeat,
       ${({ theme }) => theme.color.grey[300]};
     cursor: pointer;
@@ -340,7 +340,7 @@ export const FileInput = ({ value, handleUrl }) => {
     <StyledFileInput>
       <div className={"banner"}>
         <label htmlFor="file" className={`uploader ${loading && "loading"}`}>
-          <Image $height={"500px"} $image={value} />
+          <Image $height={"32rem"} $image={value} />
         </label>
       </div>
       <Wrapper $small>

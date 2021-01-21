@@ -52,7 +52,7 @@ const StyledNavbar = styled.div`
     &.active {
       border-bottom: 1px solid ${({ theme }) => theme.color.primary};
       .menu {
-        max-height: 500px;
+        max-height: 32rem;
       }
     }
     & > div {

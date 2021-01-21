@@ -15,8 +15,8 @@ export default function AboutPage() {
           </H5>
           <div className={"banner"}>
             <Image
-              $height={"500px"}
-              $image={"https://i.imgur.com/Fy21EsI.jpg"}
+              $height={"32rem"}
+              $image={"https://i.imgur.com/LmwJdsm.jpg"}
             />
           </div>
           <Wrapper $medium className={"content"}>

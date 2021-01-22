@@ -3,6 +3,7 @@ import HomePage from "../../page/HomePage";
 import ListPage from "../../page/ListPage";
 import ArticlePage from "../../page/ArticlePage";
 import AboutPage from "../../page/AboutPage";
+import ResultPage from "../../page/ResultPage";
 import PostPage from "../../page/PostPage";
 import LoginPage from "../../page/LoginPage";
 import RegisterPage from "../../page/RegisterPage";
@@ -14,7 +15,7 @@ import {
   useLocation,
   useHistory,
 } from "react-router-dom";
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import { selectUserStatus, verifyUser } from "../../redux/reducers/userReducer";
 import { useDispatch, useSelector } from "react-redux";
 import { getAuthToken } from "../../utils";
@@ -62,18 +63,17 @@ export default function Blog() {
   const dispatch = useDispatch();
   const postStatus = useSelector(selectPostStatus);
   const userStatus = useSelector(selectUserStatus);
-  const isPost = useRef(false);
+
   useEffect(() => {
     getAuthToken();
     dispatch(verifyUser({ goal: "verify" }));
   }, [dispatch]);
 
   useEffect(() => {
-    if (!isPost.current) {
+    if (postStatus === "idle") {
       dispatch(getPosts());
-      isPost.current = true;
     }
-  }, [dispatch]);
+  }, [postStatus, dispatch]);
 
   return (
     <>
@@ -94,6 +94,11 @@ export default function Blog() {
               render={(props) => <ArticlePage {...props} />}
               exact
               path="/article/:id"
+            />
+            <Route
+              render={(props) => <ResultPage {...props} />}
+              exact
+              path="/result"
             />
             <Route
               render={(props) => <AboutPage {...props} />}

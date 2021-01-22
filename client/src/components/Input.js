@@ -2,7 +2,7 @@ import styled, { css } from "styled-components";
 import PropTypes from "prop-types";
 import { ReactComponent as Search } from "../image/search.svg";
 import { H7, StyledH5, StyledH7, TextColor } from "./Text";
-import { useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Transition } from "./Animation";
 import { AfterLine } from "./Line";
 import { ReactComponent as Down } from "../image/down.svg";
@@ -12,6 +12,15 @@ import UploadUrl from "../image/upload.svg";
 import { deleteImage, uploadImage } from "../WebAPI";
 import { FlexCenter, Wrapper } from "./Layout";
 import LogoAnimated from "../image/logo_animated.svg";
+import { useHistory, useLocation } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  getPostsSearch,
+  resetPostStatus,
+  selectPostsQuery,
+  selectPostsResult,
+  selectPostStatus,
+} from "../redux/reducers/postReducer";
 
 const StyledSearchInput = styled.form`
   display: flex;
@@ -57,17 +66,55 @@ const StyledSearchInput = styled.form`
 `;
 
 export const SearchInput = () => {
+  const history = useHistory();
   const [value, setValue] = useState("");
+  const { pathname, search } = useLocation();
+  const postStatus = useSelector(selectPostStatus);
+  const dispatch = useDispatch();
+  const posts = useSelector(selectPostsResult);
+  const query = useSelector(selectPostsQuery);
+
   const handleOnChange = ({ target }) => {
     setValue(target.value);
   };
-  const handleOnSubmit = (event) => {
-    if (value) console.log(value);
-    setValue("");
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
+    if (value && value !== query && postStatus === "ready") {
+      dispatch(getPostsSearch(value));
+      setValue("");
+    }
+    if (posts && postStatus === "found") {
+      dispatch(resetPostStatus());
+    }
   };
+
+  useEffect(() => {
+    if (query && postStatus === "found") {
+      if (pathname === "/result")
+        history.replace({
+          search: `?search=${query}`,
+        });
+      else
+        history.push({
+          pathname: "/result",
+          search: `?search=${query}`,
+        });
+    }
+  }, [query, postStatus, pathname, history]);
+
+  useEffect(() => {
+    const param = new URLSearchParams(search).get("search");
+    if (param) console.log(param);
+    if (param && query !== param && postStatus === "ready")
+      dispatch(getPostsSearch(param));
+    if (posts && postStatus === "found") {
+      dispatch(resetPostStatus());
+    }
+  }, [search, query, dispatch, posts, postStatus]);
+
   return (
-    <StyledSearchInput onSubmit={handleOnSubmit}>
+    <StyledSearchInput onSubmit={handleSubmit}>
       <input
         type="search"
         placeholder="搜尋"
@@ -75,7 +122,7 @@ export const SearchInput = () => {
         value={value}
         onChange={handleOnChange}
       />
-      <button type="submit">
+      <button>
         <Search />
       </button>
     </StyledSearchInput>
@@ -266,6 +313,49 @@ Select.propTypes = {
   required: PropTypes.bool,
 };
 
+const StyledInlineInput = styled.form`
+  ${FlexCenter}
+  & > * ~ * {
+    margin-left: 1rem;
+  }
+  ${({ theme }) => theme.media.md} {
+    flex-direction: column;
+    & > * ~ * {
+      margin-left: 0;
+      margin-top: 1rem;
+    }
+  }
+`;
+
+export const InlineInput = ({
+  type,
+  placeholder,
+  value,
+  handleValue,
+  buttonText,
+  handleSubmit,
+}) => (
+  <StyledInlineInput onSubmit={handleSubmit}>
+    <StyledInput
+      type={type}
+      placeholder={placeholder}
+      value={value}
+      onChange={({ target }) => handleValue(target.value)}
+      required
+    />
+    <Button>{buttonText}</Button>
+  </StyledInlineInput>
+);
+
+InlineInput.propTypes = {
+  type: PropTypes.string,
+  placeholder: PropTypes.string,
+  value: PropTypes.string,
+  handleValue: PropTypes.func,
+  buttonText: PropTypes.string,
+  handleSubmit: PropTypes.func,
+};
+
 const StyledFileInput = styled.div`
   & .uploader {
     ${FlexCenter}
@@ -343,22 +433,16 @@ export const FileInput = ({ value, handleUrl }) => {
         </label>
       </div>
       <Wrapper $small>
-        <div className={"flex"}>
-          <input
-            type="url"
-            placeholder="或輸入圖片網址"
-            value={link}
-            onChange={({ target }) => setLink(target.value)}
-          />
-          <Button
-            onClick={(event) => {
-              event.preventDefault();
-              handleUpload(link);
-            }}
-          >
-            使用網址
-          </Button>
-        </div>
+        <InlineInput
+          type={"url"}
+          placeholder={"或輸入圖片網址"}
+          buttonText={"使用網址"}
+          value={link}
+          handleValue={(value) => {
+            setLink(value);
+          }}
+          handleSubmit={handleUpload}
+        />
         <div className={"flex"}>
           <H7 $error>{errorMessage}</H7>
         </div>

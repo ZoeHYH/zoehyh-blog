@@ -1,4 +1,5 @@
 import styled, { css } from "styled-components";
+import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import logoName from "../image/logo_name.svg";
 import logoNameAnimated from "../image/logo_name_animated.svg";
@@ -9,8 +10,11 @@ const HideText = css`
   white-space: nowrap;
 `;
 
-export const Logo = styled(Link)`
-  ${HideText}
+export const StyledLogo = styled(Link)`
+  &,
+  & h1 {
+    ${HideText}
+  }
   display: inline-block;
   width: 120px;
   height: 60px;
@@ -19,3 +23,14 @@ export const Logo = styled(Link)`
     background: url(${logoNameAnimated}) center/contain no-repeat;
   }
 `;
+
+export const Logo = ({ to, text }) => (
+  <StyledLogo to={to}>
+    <h1>{text}</h1>
+  </StyledLogo>
+);
+
+Logo.propTypes = {
+  to: PropTypes.string,
+  text: PropTypes.string,
+};

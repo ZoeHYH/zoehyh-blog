@@ -101,9 +101,7 @@ export default function Navbar() {
     <StyledNavbar className={isActive ? "active" : ""}>
       <Wrapper>
         <div>
-          <Logo to={"/"} className={"logo"}>
-            <h1>ZoeHYH</h1>
-          </Logo>
+          <Logo to={"/"} className={"logo"} text={"ZoeHYH"} />
           <SearchInput />
           <Hamburger
             className={"hamburger"}

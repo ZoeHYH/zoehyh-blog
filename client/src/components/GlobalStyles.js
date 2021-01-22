@@ -97,6 +97,8 @@ export const GlobalStyle = createGlobalStyle`
   h5,
   h6 {
     line-height: 1.2;
+    white-space: pre-wrap;
+    word-break: break-word;
   }
   p {
     white-space: pre-wrap;

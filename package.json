@@ -1,5 +1,5 @@
 {
-  "name": "blog-redux",
+  "name": "zoehyh-blog",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -18,7 +18,7 @@
     "react-scripts": "4.0.1",
     "styled-components": "^5.2.1"
   },
-  "homepage": "https://zoehyh.github.io/blog-redux",
+  "homepage": "https://zoehyh.github.io/zoehyh-blog",
   "scripts": {
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",

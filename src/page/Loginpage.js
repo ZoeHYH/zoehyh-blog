@@ -1,4 +1,4 @@
-import { ArrowButton } from "../components/Button";
+import { Button } from "../components/Button";
 import { Input } from "../components/Input";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -12,6 +12,7 @@ import {
 import { setAuthToken } from "../utils";
 import { H1, H7 } from "../components/Text";
 import { ArticleBlock, Form, Main, Wrapper } from "../components/Layout";
+import { ArrowLink } from "../components/Link";
 
 export default function LoginPage() {
   const dispatch = useDispatch();
@@ -27,7 +28,7 @@ export default function LoginPage() {
   };
 
   useEffect(() => {
-    if (status === "suceeded") return history.push("/");
+    if (status === "succeeded") return history.push("/");
     if (status === "failed") setAuthToken(null);
   }, [status, history]);
 
@@ -65,7 +66,10 @@ export default function LoginPage() {
                 required
               ></Input>
               <H7 $error>{status === "failed" && error}</H7>
-              <ArrowButton text={"登入"} />
+              <div className={"buttons"}>
+                <Button>登入</Button>
+                <ArrowLink to={"/register"} label={"註冊"} />
+              </div>
             </Form>
           </Wrapper>
         </ArticleBlock>

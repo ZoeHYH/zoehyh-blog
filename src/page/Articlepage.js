@@ -69,7 +69,7 @@ export default function ArticlePage() {
                     <Button $alert onClick={handleDelete}>
                       刪除
                     </Button>
-                    <ArrowLink to={`/edit-${post.id}`} label={"編輯"} />
+                    <ArrowLink to={`/edit/${post.id}`} label={"編輯"} />
                   </div>
                 )}
               </H4>

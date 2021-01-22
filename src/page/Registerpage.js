@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { ArrowButton } from "../components/Button";
+import { Button } from "../components/Button";
 import { Input } from "../components/Input";
 import { useHistory } from "react-router-dom";
 import {
@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setAuthToken } from "../utils";
 import { ArticleBlock, Form, Main, Wrapper } from "../components/Layout";
 import { H1, H7 } from "../components/Text";
+import { ArrowLink } from "../components/Link";
 
 export default function RegisterPage() {
   const dispatch = useDispatch();
@@ -28,7 +29,7 @@ export default function RegisterPage() {
   };
 
   useEffect(() => {
-    if (status === "suceeded") return history.push("/");
+    if (status === "succeeded") return history.push("/");
     if (status === "failed") setAuthToken(null);
   }, [status, history]);
 
@@ -76,8 +77,10 @@ export default function RegisterPage() {
                 required
               />
               <H7 $error>{status === "failed" && error}</H7>
-              <ArrowButton text={"註冊"} />
-              <ArrowButton text={"登入"} />
+              <div className={"buttons"}>
+                <Button>註冊</Button>
+                <ArrowLink to={"/register"} label={"登入"} />
+              </div>
             </Form>
           </Wrapper>
         </ArticleBlock>

@@ -90,11 +90,10 @@ export default function Blog() {
               exact
               path="/list/:page"
             />
-            <Redirect exact from="/list" to="/list/1" />
             <Route
               render={(props) => <ArticlePage {...props} />}
               exact
-              path="/article-:id"
+              path="/article/:id"
             />
             <Route
               render={(props) => <AboutPage {...props} />}
@@ -102,9 +101,13 @@ export default function Blog() {
               path="/about"
             />
             <PrivateRoute component={PostPage} exact path="/post" />
-            <PrivateRoute component={EditPage} exact path="/edit-:id" />
+            <PrivateRoute component={EditPage} exact path="/edit/:id" />
             <PublicOnlyRoute component={LoginPage} exact path="/login" />
             <PublicOnlyRoute component={RegisterPage} exact path="/register" />
+            <Redirect exact from="/list" to="/list/1" />
+            <Redirect exact from="/article" to="/list/1" />
+            <Redirect exact from="/edit" to="/post" />
+            <Redirect exact from="/*" to="/" />
           </Switch>
         )}
         <Footer />

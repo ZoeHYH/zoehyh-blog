@@ -33,7 +33,7 @@ export default function HomePage() {
                 <ImageCard
                   as="li"
                   key={post.id}
-                  to={`/article-${post.id}`}
+                  to={`/article/${post.id}`}
                   post={post}
                   $square={"40vmax"}
                   $image={defaultImage}
@@ -77,7 +77,7 @@ export default function HomePage() {
                   <Card
                     as="li"
                     key={post.id}
-                    to={`/article-${post.id}`}
+                    to={`/article/${post.id}`}
                     post={post}
                     $width={"32%"}
                     $image={defaultImage}

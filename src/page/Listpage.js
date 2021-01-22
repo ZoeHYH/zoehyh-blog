@@ -36,7 +36,7 @@ export default function ListPage() {
                   <Card
                     as="li"
                     key={post.id}
-                    to={`/article-${post.id}`}
+                    to={`/article/${post.id}`}
                     post={post}
                     $width={"48%"}
                     $image={defaultImage}

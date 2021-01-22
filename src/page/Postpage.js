@@ -32,7 +32,7 @@ export default function PostPage() {
   };
 
   useEffect(() => {
-    if (postStatus === "succeeded") history.push(`/article-${post.id}`);
+    if (postStatus === "succeeded") history.push(`/article/${post.id}`);
   }, [postStatus, history, post]);
 
   useEffect(() => {

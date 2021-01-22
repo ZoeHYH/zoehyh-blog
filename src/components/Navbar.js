@@ -124,12 +124,7 @@ export default function Navbar() {
               </StyledLink>
             </>
           )}
-          {!user && (
-            <>
-              <Nav to="/login" isExact={true} label="登入" />
-              <Nav to="/register" isExact={true} label="註冊" />
-            </>
-          )}
+          {!user && <Nav to="/login" isExact={true} label="會員" />}
         </div>
       </Wrapper>
     </StyledNavbar>

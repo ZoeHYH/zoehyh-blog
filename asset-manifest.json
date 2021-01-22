@@ -1,24 +1,24 @@
 {
   "files": {
-    "main.js": "/blog-redux/static/js/main.0ca93cac.chunk.js",
-    "main.js.map": "/blog-redux/static/js/main.0ca93cac.chunk.js.map",
-    "runtime-main.js": "/blog-redux/static/js/runtime-main.23d9a24a.js",
-    "runtime-main.js.map": "/blog-redux/static/js/runtime-main.23d9a24a.js.map",
-    "static/js/2.cbf5fccd.chunk.js": "/blog-redux/static/js/2.cbf5fccd.chunk.js",
-    "static/js/2.cbf5fccd.chunk.js.map": "/blog-redux/static/js/2.cbf5fccd.chunk.js.map",
-    "index.html": "/blog-redux/index.html",
-    "static/js/2.cbf5fccd.chunk.js.LICENSE.txt": "/blog-redux/static/js/2.cbf5fccd.chunk.js.LICENSE.txt",
-    "static/media/arrow.8debce0a.svg": "/blog-redux/static/media/arrow.8debce0a.svg",
-    "static/media/down.6c82999b.svg": "/blog-redux/static/media/down.6c82999b.svg",
-    "static/media/logo_animated.2b962468.svg": "/blog-redux/static/media/logo_animated.2b962468.svg",
-    "static/media/logo_name.c2e1a5fd.svg": "/blog-redux/static/media/logo_name.c2e1a5fd.svg",
-    "static/media/logo_name_animated.60977f76.svg": "/blog-redux/static/media/logo_name_animated.60977f76.svg",
-    "static/media/search.3935f3fb.svg": "/blog-redux/static/media/search.3935f3fb.svg",
-    "static/media/upload.65dce0ac.svg": "/blog-redux/static/media/upload.65dce0ac.svg"
+    "main.js": "/zoehyh-blog/static/js/main.86b871cf.chunk.js",
+    "main.js.map": "/zoehyh-blog/static/js/main.86b871cf.chunk.js.map",
+    "runtime-main.js": "/zoehyh-blog/static/js/runtime-main.f105db1d.js",
+    "runtime-main.js.map": "/zoehyh-blog/static/js/runtime-main.f105db1d.js.map",
+    "static/js/2.0d2ff342.chunk.js": "/zoehyh-blog/static/js/2.0d2ff342.chunk.js",
+    "static/js/2.0d2ff342.chunk.js.map": "/zoehyh-blog/static/js/2.0d2ff342.chunk.js.map",
+    "index.html": "/zoehyh-blog/index.html",
+    "static/js/2.0d2ff342.chunk.js.LICENSE.txt": "/zoehyh-blog/static/js/2.0d2ff342.chunk.js.LICENSE.txt",
+    "static/media/arrow.8debce0a.svg": "/zoehyh-blog/static/media/arrow.8debce0a.svg",
+    "static/media/down.6c82999b.svg": "/zoehyh-blog/static/media/down.6c82999b.svg",
+    "static/media/logo_animated.2b962468.svg": "/zoehyh-blog/static/media/logo_animated.2b962468.svg",
+    "static/media/logo_name.c2e1a5fd.svg": "/zoehyh-blog/static/media/logo_name.c2e1a5fd.svg",
+    "static/media/logo_name_animated.60977f76.svg": "/zoehyh-blog/static/media/logo_name_animated.60977f76.svg",
+    "static/media/search.3935f3fb.svg": "/zoehyh-blog/static/media/search.3935f3fb.svg",
+    "static/media/upload.65dce0ac.svg": "/zoehyh-blog/static/media/upload.65dce0ac.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.23d9a24a.js",
-    "static/js/2.cbf5fccd.chunk.js",
-    "static/js/main.0ca93cac.chunk.js"
+    "static/js/runtime-main.f105db1d.js",
+    "static/js/2.0d2ff342.chunk.js",
+    "static/js/main.86b871cf.chunk.js"
   ]
 }

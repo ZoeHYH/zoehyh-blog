@@ -63,17 +63,15 @@ export default function ArticlePage() {
               <Image $height={"32rem"} $image={defaultImage} />
             </div>
             <Wrapper $medium className={"content"}>
-              <H4 as="p">
-                {post.body}
-                {userStatus === "succeeded" && (
-                  <div className="group">
-                    <Button $alert onClick={handleDelete}>
-                      刪除
-                    </Button>
-                    <ArrowLink to={`/edit/${post.id}`} label={"編輯"} />
-                  </div>
-                )}
-              </H4>
+              <H4 as="p">{post.body}</H4>
+              {userStatus === "succeeded" && (
+                <div className="group">
+                  <Button $alert onClick={handleDelete}>
+                    刪除
+                  </Button>
+                  <ArrowLink to={`/edit/${post.id}`} label={"編輯"} />
+                </div>
+              )}
             </Wrapper>
           </ArticleBlock>
         )}

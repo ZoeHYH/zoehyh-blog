@@ -9,7 +9,7 @@ import { ReactComponent as Down } from "../image/down.svg";
 import { Button } from "./Button";
 import { Image } from "./Image";
 import UploadUrl from "../image/upload.svg";
-import { deleteImage, uploadImage } from "../WebAPI";
+import { uploadImage } from "../WebAPI";
 import { FlexCenter, Wrapper } from "./Layout";
 import LogoAnimated from "../image/logo_animated.svg";
 import { useHistory, useLocation } from "react-router-dom";
@@ -405,18 +405,15 @@ export const FileInput = ({ value, handleUrl }) => {
   const input = useRef(null);
   const [link, setLink] = useState("");
   const [loading, setLoading] = useState(false);
+  const id =
+    value && value.slice(value.lastIndexOf("/") + 1, value.lastIndexOf("."));
 
   const handleUpload = async (image) => {
     try {
       setLoading(true);
-      if (value)
-        deleteImage(
-          value.slice(value.lastIndexOf("/") + 1, value.lastIndexOf("."))
-        );
-      const { data, success } = await uploadImage(image);
-      if (!success) throw new Error(data.error.message);
-      handleUrl(data.link);
-      setLink(data.link);
+      const { secure_url } = await uploadImage(image, id);
+      handleUrl(secure_url);
+      setLink(secure_url);
       setLoading(false);
       setErrorMessage("");
     } catch (error) {

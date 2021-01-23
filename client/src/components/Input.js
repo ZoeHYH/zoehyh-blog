@@ -2,7 +2,7 @@ import styled, { css } from "styled-components";
 import PropTypes from "prop-types";
 import { ReactComponent as Search } from "../image/search.svg";
 import { H7, StyledH5, StyledH7, TextColor } from "./Text";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Transition } from "./Animation";
 import { AfterLine } from "./Line";
 import { ReactComponent as Down } from "../image/down.svg";
@@ -105,7 +105,6 @@ export const SearchInput = () => {
 
   useEffect(() => {
     const param = new URLSearchParams(search).get("search");
-    if (param) console.log(param);
     if (param && query !== param && postStatus === "ready")
       dispatch(getPostsSearch(param));
     if (posts && postStatus === "found") {
@@ -314,7 +313,8 @@ Select.propTypes = {
 };
 
 const StyledInlineInput = styled.form`
-  ${FlexCenter}
+  display: flex;
+  justify-content: center;
   & > * ~ * {
     margin-left: 1rem;
   }

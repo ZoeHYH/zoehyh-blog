@@ -106,13 +106,6 @@ export const ArticleBlock = styled.div`
     ${FlexBetweenCenter}
     margin-top: 2rem;
   }
-  & .buttons {
-    display: flex;
-    align-items: center;
-    & > * ~ * {
-      margin-left: 2rem;
-    }
-  }
   ${({ theme }) => theme.media.sm} {
     & .title,
     & .info {
@@ -121,6 +114,15 @@ export const ArticleBlock = styled.div`
     & .banner {
       margin-top: 2.5rem;
     }
+  }
+`;
+
+export const ButtonGroup = styled.div`
+  display: flex;
+  & > * ~ * {
+    margin-left: 2rem;
+    display: flex;
+    align-items: center;
   }
 `;
 

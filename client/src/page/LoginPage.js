@@ -11,8 +11,14 @@ import {
 } from "../redux/reducers/userReducer";
 import { setAuthToken } from "../utils";
 import { H1, H7 } from "../components/Text";
-import { ArticleBlock, Form, Main, Wrapper } from "../components/Layout";
-import { ArrowLink } from "../components/Link";
+import {
+  ArticleBlock,
+  ButtonGroup,
+  Form,
+  Main,
+  Wrapper,
+} from "../components/Layout";
+import { StyledLink } from "../components/Link";
 
 export default function LoginPage() {
   const dispatch = useDispatch();
@@ -66,10 +72,12 @@ export default function LoginPage() {
                 required
               ></Input>
               <H7 $error>{status === "failed" && error}</H7>
-              <div className={"buttons"}>
+              <ButtonGroup>
                 <Button>登入</Button>
-                <ArrowLink to={"/register"} label={"註冊"} />
-              </div>
+                <StyledLink to={"/register"} $text>
+                  註冊
+                </StyledLink>
+              </ButtonGroup>
             </Form>
           </Wrapper>
         </ArticleBlock>

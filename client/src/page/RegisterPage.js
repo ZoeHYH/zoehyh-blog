@@ -10,9 +10,15 @@ import {
 } from "../redux/reducers/userReducer";
 import { useDispatch, useSelector } from "react-redux";
 import { setAuthToken } from "../utils";
-import { ArticleBlock, Form, Main, Wrapper } from "../components/Layout";
+import {
+  ArticleBlock,
+  ButtonGroup,
+  Form,
+  Main,
+  Wrapper,
+} from "../components/Layout";
 import { H1, H7 } from "../components/Text";
-import { ArrowLink } from "../components/Link";
+import { StyledLink } from "../components/Link";
 
 export default function RegisterPage() {
   const dispatch = useDispatch();
@@ -77,10 +83,12 @@ export default function RegisterPage() {
                 required
               />
               <H7 $error>{status === "failed" && error}</H7>
-              <div className={"buttons"}>
+              <ButtonGroup>
                 <Button>註冊</Button>
-                <ArrowLink to={"/register"} label={"登入"} />
-              </div>
+                <StyledLink to={"/login"} $text>
+                  登入
+                </StyledLink>
+              </ButtonGroup>
             </Form>
           </Wrapper>
         </ArticleBlock>

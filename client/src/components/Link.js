@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 import PropTypes from "prop-types";
-import { H5, StyledH6 } from "./Text";
+import { H5, StyledH6, StyledH5Bold } from "./Text";
 import { AfterLine } from "./Line";
 import { Transition } from "./Animation";
 import { ReactComponent as Arrow } from "../image/arrow.svg";
@@ -32,6 +32,12 @@ export const StyledLink = styled(Link)`
     $page &&
     css`
       ${({ theme, $active }) => $active && `color: ${theme.color.black};`}
+    `}
+  ${({ $text }) =>
+    $text &&
+    css`
+      ${StyledH5Bold}
+      padding: 1rem 1rem;
     `}
 `;
 

@@ -106,8 +106,8 @@ export const H4 = styled.h4`
 
 export const H5 = styled.h5`
   ${StyledH5}
-  ${({ narrow }) => narrow && StyledH5Narrow}
-  ${({ bold }) => bold && StyledH5Bold}
+  ${({ $narrow }) => $narrow && StyledH5Narrow}
+  ${({ $bold }) => $bold && StyledH5Bold}
   ${TextColor}
 `;
 

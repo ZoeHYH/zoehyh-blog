@@ -47,7 +47,7 @@ export const Card = ({ to, post, $width, $image }) => (
     </div>
     <div className={"content"}>
       <H3>{post.title}</H3>
-      <H5 as="p" narrow $grey700 className="preview">
+      <H5 as="p" $narrow $grey700 className="preview">
         {post.body}
       </H5>
     </div>

@@ -9,7 +9,7 @@ import { FlexBetweenCenter } from "./Layout";
 export const Button = styled.button`
   ${StyledH5}
   word-break: keep-all;
-  padding: 0.5rem 2.5rem;
+  padding: 1rem 2.5rem;
   position: relative;
   color: ${({ theme }) => theme.color.white};
   background: ${({ theme }) => theme.color.grey[700]};

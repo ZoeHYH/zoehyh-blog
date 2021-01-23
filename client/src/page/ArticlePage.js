@@ -38,7 +38,8 @@ export default function ArticlePage() {
   };
 
   useEffect(() => {
-    if (postStatus !== "loading" && !post) history.push("/");
+    if (postStatus === "failed" || (postStatus === "succeeded" && !post))
+      history.push("/");
   }, [postStatus, post, history]);
 
   useEffect(() => {

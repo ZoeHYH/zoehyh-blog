@@ -70,20 +70,18 @@ export default function ResultPage() {
                 ))}
           </Container>
         </Section>
-        {(!posts || posts.length === 0) && (
-          <Wrapper $medium>
-            <InlineInput
-              type={"text"}
-              placeholder={"還想查詢什麼呢？"}
-              buttonText={"搜尋"}
-              value={value}
-              handleValue={(value) => {
-                setValue(value);
-              }}
-              handleSubmit={handleSubmit}
-            />
-          </Wrapper>
-        )}
+        <Wrapper $medium>
+          <InlineInput
+            type={"text"}
+            placeholder={"還想查詢什麼呢？"}
+            buttonText={"搜尋"}
+            value={value}
+            handleValue={(value) => {
+              setValue(value);
+            }}
+            handleSubmit={handleSubmit}
+          />
+        </Wrapper>
       </Wrapper>
     </Main>
   );

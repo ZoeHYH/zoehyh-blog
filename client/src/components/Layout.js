@@ -13,11 +13,11 @@ export const FlexCenter = css`
 `;
 
 export const Wrapper = styled.div`
-  max-width: 72rem;
+  max-width: ${({ theme }) => theme.wrapper.lg}px;
   margin: 0 auto;
   padding: 0 1rem;
-  ${({ $medium }) => $medium && `max-width: 46rem;`}
-  ${({ $small }) => $small && `max-width: 35rem;`}
+  ${({ theme, $medium }) => $medium && `max-width: ${theme.wrapper.md}px;`}
+  ${({ theme, $small }) => $small && `max-width: ${theme.wrapper.sm}px;`}
 `;
 
 export const Main = styled.main`

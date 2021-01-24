@@ -40,7 +40,7 @@ const StyledCard = styled(Link)`
 
 export const Card = ({ to, post, $width, $image }) => (
   <StyledCard $width={$width} to={to}>
-    <Image $height={"250px"} className={"image"} $image={$image} />
+    <Image $width={"600"} $height={"250"} className={"image"} $image={$image} />
     <div className={"infobar"}>
       <H7 $grey500>{"post"}</H7>
       <H7 $grey500>{new Date(post.createdAt).toLocaleString()}</H7>
@@ -67,7 +67,23 @@ Card.propTypes = {
 };
 
 const StyledImageCard = styled(Link)`
-  ${({ $square }) => `width: ${$square};`}
+  ${({ $square }) =>
+    $square &&
+    $square[0] &&
+    `width: ${$square[0]};
+      `}
+  ${({ theme, $square }) =>
+    $square &&
+    $square[1] &&
+    `${theme.media.md} {
+      width: ${$square[1]};
+    }`}
+    ${({ theme, $square }) =>
+    $square &&
+    $square[1] &&
+    `${theme.media.sm} {
+      width: ${$square[2]};
+    }`}
   & > * ~ * {
     margin-top: 1rem;
   }
@@ -85,6 +101,6 @@ ImageCard.propTypes = {
   post: PropTypes.shape({
     title: PropTypes.string,
   }),
-  $square: PropTypes.string,
+  $square: PropTypes.arrayOf(PropTypes.string),
   $image: PropTypes.string,
 };

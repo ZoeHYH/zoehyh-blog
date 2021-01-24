@@ -33,6 +33,11 @@ const theme = {
     sm: "@media (max-width: 381px)",
     md: "@media (max-width: 600px)",
   },
+  wrapper: {
+    sm: 420,
+    md: 736,
+    lg: 1152,
+  },
 };
 
 ReactDOM.render(

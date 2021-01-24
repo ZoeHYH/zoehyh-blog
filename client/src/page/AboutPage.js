@@ -15,7 +15,7 @@ export default function AboutPage() {
             {new Date(ABOUT.createdAt).toLocaleString()}
           </H5>
           <div className={"banner"}>
-            <Image $height={"32rem"} $image={defaultImage} />
+            <Image $width={"max"} $height={"500"} $image={defaultImage} />
           </div>
           <Wrapper $medium className={"content"}>
             <H4 as="p">{ABOUT.body}</H4>

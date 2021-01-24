@@ -35,7 +35,7 @@ export default function HomePage() {
                   key={post.id}
                   to={`/article/${post.id}`}
                   post={post}
-                  $square={"40vmax"}
+                  $square={["540", "400", "280"]}
                   $image={defaultImage}
                 />
               ))}

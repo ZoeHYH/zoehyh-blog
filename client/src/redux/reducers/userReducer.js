@@ -1,21 +1,25 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { setAuthToken } from "../../utils";
 import {
-  getUser as getUserAPI,
+  verify,
   login as loginAPI,
   register as registerAPI,
 } from "../../WebAPI";
 
 const login = async ({ username, password }) => {
-  const tokenData = await loginAPI(username, password);
-  if (!tokenData.ok) throw new Error(tokenData.message);
-  setAuthToken(tokenData.token);
+  const { ok, token, message } = await loginAPI(username, password);
+  if (!ok) throw new Error(message);
+  setAuthToken(token);
 };
 
 const register = async ({ nickname, username, password }) => {
-  const tokenData = await registerAPI(nickname, username, password);
-  if (!tokenData.ok) throw new Error(tokenData.message);
-  setAuthToken(tokenData.token);
+  const { ok, token, message } = await registerAPI(
+    nickname,
+    username,
+    password
+  );
+  if (!ok) throw new Error(message);
+  setAuthToken(token);
 };
 
 export const verifyUser = createAsyncThunk(
@@ -27,9 +31,9 @@ export const verifyUser = createAsyncThunk(
       } else if (goal === "login") {
         await login(data);
       }
-      const response = await getUserAPI();
-      if (!response.ok) throw new Error(response.message);
-      return response.data;
+      const { ok, user, message } = await verify();
+      if (!ok) throw new Error(message);
+      return user;
     } catch (error) {
       return rejectWithValue({
         goal,

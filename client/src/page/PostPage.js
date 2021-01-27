@@ -4,6 +4,7 @@ import { Button } from "../components/Button";
 import {
   createPost,
   resetPostStatus,
+  selectCategories,
   selectPost,
   selectPostError,
   selectPostStatus,
@@ -19,15 +20,17 @@ export default function PostPage() {
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("");
   const [body, setBody] = useState("");
-  const [url, setUrl] = useState("");
+  const [image, setImage] = useState("");
   const error = useSelector(selectPostError);
   const post = useSelector(selectPost);
+  const categories = useSelector(selectCategories);
   const postStatus = useSelector(selectPostStatus);
   const [imageError, setImageError] = useState("");
 
   const handleOnSubmit = async (event) => {
     event.preventDefault();
-    if (url) await dispatch(createPost({ title, body }));
+    if (image)
+      dispatch(createPost({ image, title, body, CategoryId: category }));
     setImageError("請上傳圖片");
   };
 
@@ -46,7 +49,7 @@ export default function PostPage() {
       <Wrapper>
         <ArticleBlock>
           <H1 className={"title"}>發布文章</H1>
-          <FileInput value={url} handleUrl={(value) => setUrl(value)} />
+          <FileInput value={image} handleImage={(value) => setImage(value)} />
           <Wrapper $small className={"content"}>
             <Form onSubmit={handleOnSubmit}>
               <Input
@@ -64,10 +67,9 @@ export default function PostPage() {
                 title={"類別"}
                 name={"category"}
                 placeholder={"文章的類別"}
-                options={[
-                  { name: "程式", value: "Code" },
-                  { name: "設計", value: "Design" },
-                ]}
+                options={categories.map(({ text, id }) => {
+                  return { text, value: id };
+                })}
                 value={category}
                 handleValue={(value) => setCategory(value)}
                 alert={postStatus === "failed"}

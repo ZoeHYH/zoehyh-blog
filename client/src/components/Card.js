@@ -38,12 +38,17 @@ const StyledCard = styled(Link)`
   }
 `;
 
-export const Card = ({ to, post, $width, $image }) => (
+export const Card = ({ to, post, $width }) => (
   <StyledCard $width={$width} to={to}>
-    <Image $width={"600"} $height={"250"} className={"image"} $image={$image} />
+    <Image
+      $width={"600"}
+      $height={"250"}
+      className={"image"}
+      $image={post.image}
+    />
     <div className={"infobar"}>
-      <H7 $grey500>{"post"}</H7>
-      <H7 $grey500>{new Date(post.createdAt).toLocaleString()}</H7>
+      <H7 $grey500>{post.Category.text}</H7>
+      <H7 $grey500>{new Date(post.updatedAt).toLocaleString()}</H7>
     </div>
     <div className={"content"}>
       <H3>{post.title}</H3>
@@ -57,10 +62,17 @@ export const Card = ({ to, post, $width, $image }) => (
 Card.propTypes = {
   to: PropTypes.string,
   post: PropTypes.shape({
+    id: PropTypes.number,
+    image: PropTypes.string,
     title: PropTypes.string,
     body: PropTypes.string,
-    createdAt: PropTypes.number,
-    id: PropTypes.number,
+    createdAt: PropTypes.string,
+    updatedAt: PropTypes.string,
+    CategoryId: PropTypes.number,
+    Category: PropTypes.shape({
+      id: PropTypes.number,
+      text: PropTypes.string,
+    }),
   }),
   $width: PropTypes.string,
   $image: PropTypes.string,
@@ -89,9 +101,9 @@ const StyledImageCard = styled(Link)`
   }
 `;
 
-export const ImageCard = ({ to, post, $square, $image }) => (
+export const ImageCard = ({ to, post, $square }) => (
   <StyledImageCard $square={$square} to={to}>
-    <Image $square={$square} $image={$image} />
+    <Image $square={$square} $image={post.image} />
     <H5>{post.title}</H5>
   </StyledImageCard>
 );
@@ -100,6 +112,7 @@ ImageCard.propTypes = {
   to: PropTypes.string,
   post: PropTypes.shape({
     title: PropTypes.string,
+    image: PropTypes.string,
   }),
   $square: PropTypes.arrayOf(PropTypes.string),
   $image: PropTypes.string,

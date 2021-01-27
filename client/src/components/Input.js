@@ -281,7 +281,7 @@ export const Select = ({
         name={name}
         value={value}
         onChange={({ target }) => {
-          handleValue(target.name, target.value);
+          handleValue(target.value);
         }}
         alert={alert}
         required={required}
@@ -291,7 +291,7 @@ export const Select = ({
         </option>
         {options.map((option) => (
           <option key={option.value} value={option.value}>
-            {option.name}
+            {option.text}
           </option>
         ))}
       </StyledSelect>
@@ -304,9 +304,12 @@ Select.propTypes = {
   placeholder: PropTypes.string,
   name: PropTypes.string,
   options: PropTypes.arrayOf(
-    PropTypes.shape({ name: PropTypes.string, value: PropTypes.string })
+    PropTypes.shape({
+      text: PropTypes.string,
+      value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    })
   ),
-  value: PropTypes.string,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   handleValue: PropTypes.func,
   alert: PropTypes.bool,
   required: PropTypes.bool,
@@ -320,6 +323,7 @@ const StyledInlineInput = styled.form`
   }
   ${({ theme }) => theme.media.md} {
     flex-direction: column;
+    align-items: flex-start;
     & > * ~ * {
       margin-left: 0;
       margin-top: 1rem;
@@ -335,7 +339,7 @@ export const InlineInput = ({
   buttonText,
   handleSubmit,
 }) => (
-  <StyledInlineInput onSubmit={handleSubmit}>
+  <StyledInlineInput onSubmit={() => handleSubmit(value)}>
     <StyledInput
       type={type}
       placeholder={placeholder}
@@ -400,20 +404,17 @@ const StyledFileInput = styled.div`
   }
 `;
 
-export const FileInput = ({ value, handleUrl }) => {
+export const FileInput = ({ value, handleImage }) => {
   const [errorMessage, setErrorMessage] = useState("");
   const input = useRef(null);
-  const [link, setLink] = useState("");
   const [loading, setLoading] = useState(false);
   const id =
     value && value.slice(value.lastIndexOf("/") + 1, value.lastIndexOf("."));
-
   const handleUpload = async (image) => {
     try {
       setLoading(true);
       const { secure_url } = await uploadImage(image, id);
-      handleUrl(secure_url);
-      setLink(secure_url);
+      handleImage(secure_url);
       setLoading(false);
       setErrorMessage("");
     } catch (error) {
@@ -426,9 +427,7 @@ export const FileInput = ({ value, handleUrl }) => {
     <StyledFileInput>
       <div className={"banner"}>
         <label htmlFor="file" className={`uploader ${loading && "loading"}`}>
-          {!loading && (
-            <Image $width={"max"} $height={"500px"} $image={value} />
-          )}
+          {!loading && <Image $width={"max"} $height={"500"} $image={value} />}
         </label>
       </div>
       <Wrapper $small>
@@ -436,9 +435,9 @@ export const FileInput = ({ value, handleUrl }) => {
           type={"url"}
           placeholder={"或輸入圖片網址"}
           buttonText={"使用網址"}
-          value={link}
+          value={value}
           handleValue={(value) => {
-            setLink(value);
+            handleImage(value);
           }}
           handleSubmit={handleUpload}
         />
@@ -459,6 +458,6 @@ export const FileInput = ({ value, handleUrl }) => {
 
 FileInput.propTypes = {
   value: PropTypes.string,
-  handleUrl: PropTypes.func,
+  handleImage: PropTypes.func,
   id: PropTypes.number,
 };

@@ -10,13 +10,7 @@ import {
 } from "../redux/reducers/userReducer";
 import { useDispatch, useSelector } from "react-redux";
 import { setAuthToken } from "../utils";
-import {
-  ArticleBlock,
-  ButtonGroup,
-  Form,
-  Main,
-  Wrapper,
-} from "../components/Layout";
+import { ArticleBlock, Group, Form, Main, Wrapper } from "../components/Layout";
 import { H1, H7 } from "../components/Text";
 import { StyledLink } from "../components/Link";
 
@@ -83,12 +77,12 @@ export default function RegisterPage() {
                 required
               />
               <H7 $error>{status === "failed" && error}</H7>
-              <ButtonGroup>
+              <Group>
                 <Button>註冊</Button>
                 <StyledLink to={"/login"} $text>
                   登入
                 </StyledLink>
-              </ButtonGroup>
+              </Group>
             </Form>
           </Wrapper>
         </ArticleBlock>

@@ -11,13 +11,7 @@ import {
 } from "../redux/reducers/userReducer";
 import { setAuthToken } from "../utils";
 import { H1, H7 } from "../components/Text";
-import {
-  ArticleBlock,
-  ButtonGroup,
-  Form,
-  Main,
-  Wrapper,
-} from "../components/Layout";
+import { ArticleBlock, Group, Form, Main, Wrapper } from "../components/Layout";
 import { StyledLink } from "../components/Link";
 
 export default function LoginPage() {
@@ -72,12 +66,12 @@ export default function LoginPage() {
                 required
               ></Input>
               <H7 $error>{status === "failed" && error}</H7>
-              <ButtonGroup>
+              <Group>
                 <Button>登入</Button>
                 <StyledLink to={"/register"} $text>
                   註冊
                 </StyledLink>
-              </ButtonGroup>
+              </Group>
             </Form>
           </Wrapper>
         </ArticleBlock>

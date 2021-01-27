@@ -12,7 +12,6 @@ import { selectPosts } from "../redux/reducers/postReducer";
 import { H1, H3, H4 } from "../components/Text";
 import { ArrowLink } from "../components/Link";
 import { Card, ImageCard } from "../components/Card";
-import { defaultImage } from "../constants/variable";
 
 export default function HomePage() {
   const posts = useSelector(selectPosts);
@@ -27,6 +26,7 @@ export default function HomePage() {
       <Section>
         <ScrollContainer as="ul">
           {posts &&
+            posts.length > 3 &&
             posts
               .slice(3, 10)
               .map((post) => (
@@ -36,7 +36,6 @@ export default function HomePage() {
                   to={`/article/${post.id}`}
                   post={post}
                   $square={["540", "400", "280"]}
-                  $image={defaultImage}
                 />
               ))}
         </ScrollContainer>
@@ -80,7 +79,6 @@ export default function HomePage() {
                     to={`/article/${post.id}`}
                     post={post}
                     $width={"32%"}
-                    $image={defaultImage}
                   />
                 ))}
           </Container>

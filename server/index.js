@@ -1,55 +1,107 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const session = require('express-session');
+const path = require('path');
 const cors = require('cors');
-const productController = require('./controllers/product');
+const { checkUser, checkAdmin } = require('./middlewares/auth');
 const userController = require('./controllers/user');
-
+const postController = require('./controllers/post');
+const categoryController = require('./controllers/category');
+const { handleError } = require('./utils/error');
 const app = express();
 const port = 5002;
-const upload = multer({ storage: multer.memoryStorage() });
+const catchAsyncError = (fn) => (req, res, next) => {
+  fn(req, res, next).catch(next);
+};
 
-app.use(express.static('public'));
+app.use(express.static(path.join(__dirname, '..', 'client/build')));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use(session({
-  secret: 'keyboard cat',
-  resave: false,
-  saveUninitialized: true,
-}));
-app.use(flash());
-app.use((req, res, next) => {
-  res.locals.username = req.session.username;
-  res.locals.errorMessage = req.flash('errMessage');
-  next();
+app.use(cors());
+
+app.get(
+  '/api/init',
+  catchAsyncError(userController.reset),
+  catchAsyncError(categoryController.reset),
+  catchAsyncError(postController.reset),
+  (req, res) =>
+    res.status(201).json({
+      ok: 1,
+      categories: res.locals.categories,
+      count: res.locals.count,
+      posts: res.locals.posts
+    })
+);
+app.get(
+  '/api/users/reset',
+  catchAsyncError(checkAdmin),
+  catchAsyncError(userController.reset)
+);
+app.get(
+  '/api/posts/reset',
+  catchAsyncError(checkAdmin),
+  catchAsyncError(postController.reset)
+);
+app.get(
+  '/api/categories/reset',
+  catchAsyncError(checkAdmin),
+  catchAsyncError(categoryController.reset)
+);
+
+app.get(
+  '/api/users/verify',
+  catchAsyncError(checkUser),
+  catchAsyncError(userController.verify)
+);
+app.post('/api/users/register', catchAsyncError(userController.create));
+app.post('/api/users/login', catchAsyncError(userController.login));
+
+app.get('/api/posts', catchAsyncError(postController.getAll));
+app.get('/api/posts/:id', catchAsyncError(postController.getOne));
+app.post(
+  '/api/posts',
+  catchAsyncError(checkUser),
+  catchAsyncError(postController.create)
+);
+app.patch(
+  '/api/posts/:id',
+  catchAsyncError(checkUser),
+  catchAsyncError(postController.update)
+);
+app.delete(
+  '/api/posts/:id',
+  catchAsyncError(checkUser),
+  catchAsyncError(postController.delete)
+);
+app.patch(
+  '/api/posts/:id/restore',
+  catchAsyncError(checkUser),
+  catchAsyncError(postController.restore)
+);
+
+app.get('/api/categories', catchAsyncError(categoryController.getAll));
+app.get('/api/categories/:id', catchAsyncError(categoryController.getOne));
+app.post(
+  '/api/categories/:id',
+  catchAsyncError(checkUser),
+  catchAsyncError(categoryController.create)
+);
+app.put(
+  '/api/categories/:id',
+  catchAsyncError(checkUser),
+  catchAsyncError(categoryController.update)
+);
+app.delete(
+  '/api/categories/:id',
+  catchAsyncError(checkUser),
+  catchAsyncError(categoryController.delete)
+);
+
+app.use(handleError);
+
+app.get('/*', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'client/build', 'index.html'));
 });
 
-function redirectBack(req, res) {
-  res.redirect(304, 'back');
-}
-
-function checkIsLogin(req, res, next) {
-  if (!req.session.username) {
-    res.redirect('/login');
-  } else {
-    next();
-  }
-}
-
-app.get('/', productController.home);
-
-app.get('/login', userController.index);
-app.post('/do-login', userController.login, redirectBack);
-app.get('/logout', userController.logout);
-
-app.get('/lottery', prizeController.index);
-app.get('/admin-lottery', checkIsLogin, prizeController.admin);
-app.post('/add-lottery', checkIsLogin, upload.single('image'), prizeController.add, redirectBack);
-app.post('/update-image-lottery', checkIsLogin, upload.single('image'), prizeController.updateImg, redirectBack);
-app.post('/update-lottery', checkIsLogin, prizeController.update, redirectBack);
-app.post('/delete-lottery', checkIsLogin, prizeController.delete, redirectBack);
-app.get('/getPrize', cors(), checkIsLogin, prizeController.getPrize);
-
 app.listen(port, () => {
-  console.log(`Restaurant's app listening on port ${port}!`);
+  console.log(`Blog's backend app listening on port ${port}!`);
 });

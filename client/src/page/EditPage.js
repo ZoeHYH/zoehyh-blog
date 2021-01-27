@@ -9,17 +9,18 @@ import {
   selectPostStatus,
   selectPostById,
   resetPostStatus,
+  selectCategories,
 } from "../redux/reducers/postReducer";
 import { useHistory, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { ArticleBlock, Form, Main, Wrapper } from "../components/Layout";
 import { H1, H7 } from "../components/Text";
-import { defaultImage } from "../constants/variable";
 
 export default function EditPage() {
   const { id } = useParams();
   const dispatch = useDispatch();
   const history = useHistory();
+  const categories = useSelector(selectCategories);
   const postById = useSelector((state) => selectPostById(state, id));
   const postByFetch = useSelector(selectPost);
   const error = useSelector(selectPostError);
@@ -27,7 +28,7 @@ export default function EditPage() {
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("");
   const [body, setBody] = useState("");
-  const [url, setUrl] = useState(defaultImage);
+  const [image, setImage] = useState("");
 
   useEffect(() => {
     if (!postById && !postByFetch) dispatch(getPost(id));
@@ -39,14 +40,16 @@ export default function EditPage() {
 
   useEffect(() => {
     if (post) {
+      setImage(post.image);
       setTitle(post.title);
       setBody(post.body);
+      setCategory(post.CategoryId);
     }
   }, [post, dispatch]);
 
   const handleOnSubmit = (event) => {
     event.preventDefault();
-    dispatch(updatePost({ id, title, body }));
+    dispatch(updatePost({ id, image, title, body, CategoryId: category }));
   };
 
   useEffect(() => {
@@ -63,10 +66,13 @@ export default function EditPage() {
     <Main>
       <Wrapper>
         <ArticleBlock>
-          <H1 className={"title"}>發布文章</H1>
+          <H1 className={"title"}>編輯文章</H1>
           {post && (
             <>
-              <FileInput value={url} handleUrl={(value) => setUrl(value)} />
+              <FileInput
+                value={image}
+                handleImage={(value) => setImage(value)}
+              />
               <Wrapper $small className={"content"}>
                 <Form onSubmit={handleOnSubmit}>
                   <Input
@@ -81,10 +87,9 @@ export default function EditPage() {
                   <Select
                     title={"類別"}
                     name={"category"}
-                    options={[
-                      { name: "程式", value: "Code" },
-                      { name: "設計", value: "Design" },
-                    ]}
+                    options={categories.map(({ text, id }) => {
+                      return { text, value: id };
+                    })}
                     value={category}
                     handleValue={(value) => setCategory(value)}
                     alert={status === "failed"}

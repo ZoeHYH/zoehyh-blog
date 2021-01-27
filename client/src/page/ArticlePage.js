@@ -16,7 +16,6 @@ import { H1, H4, H5 } from "../components/Text";
 import { Button } from "../components/Button";
 import { ArrowLink } from "../components/Link";
 import { selectUserStatus } from "../redux/reducers/userReducer";
-import { defaultImage } from "../constants/variable";
 
 export default function ArticlePage() {
   const { id } = useParams();
@@ -39,7 +38,7 @@ export default function ArticlePage() {
 
   useEffect(() => {
     if (postStatus === "failed" || (postStatus === "succeeded" && !post))
-      history.push("/");
+      history.goBack();
   }, [postStatus, post, history]);
 
   useEffect(() => {
@@ -54,13 +53,13 @@ export default function ArticlePage() {
       <Wrapper>
         {post && (
           <ArticleBlock>
-            <H5 $grey500>post</H5>
+            <H5 $grey500>{post.Category.text}</H5>
             <H1 className={"title"}>{post.title}</H1>
             <H5 $grey500 className={"info"}>
-              {new Date(post.createdAt).toLocaleString()}
+              {new Date(post.updatedAt).toLocaleString()}
             </H5>
             <div className={"banner"}>
-              <Image $width={"max"} $height={"500"} $image={defaultImage} />
+              <Image $width={"max"} $height={"500"} $image={post.image} />
             </div>
             <Wrapper $medium className={"content"}>
               <H4 as="p">{post.body}</H4>

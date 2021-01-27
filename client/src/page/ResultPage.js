@@ -1,6 +1,6 @@
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { defaultImage, LIST_LIMIT } from "../constants/variable";
+import { LIST_LIMIT } from "../constants/variable";
 import {
   getPostsSearch,
   resetPostStatus,
@@ -65,7 +65,6 @@ export default function ResultPage() {
                     to={`/article/${post.id}`}
                     post={post}
                     $width={"48%"}
-                    $image={defaultImage}
                   />
                 ))}
           </Container>

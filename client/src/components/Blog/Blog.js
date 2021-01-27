@@ -8,7 +8,7 @@ import PostPage from "../../page/PostPage";
 import LoginPage from "../../page/LoginPage";
 import RegisterPage from "../../page/RegisterPage";
 import {
-  HashRouter as Router,
+  BrowserRouter as Router,
   Switch,
   Route,
   Redirect,
@@ -21,7 +21,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAuthToken } from "../../utils";
 import EditPage from "../../page/EditPage";
 import { Loading } from "../Loader";
-import { getPosts, selectPostStatus } from "../../redux/reducers/postReducer";
+import { getReady, selectPostStatus } from "../../redux/reducers/postReducer";
 import { Footer } from "../Footer";
 import PropTypes from "prop-types";
 
@@ -71,7 +71,7 @@ export default function Blog() {
 
   useEffect(() => {
     if (postStatus === "idle") {
-      dispatch(getPosts());
+      dispatch(getReady());
     }
   }, [postStatus, dispatch]);
 

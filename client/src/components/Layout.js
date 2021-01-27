@@ -117,7 +117,7 @@ export const ArticleBlock = styled.div`
   }
 `;
 
-export const ButtonGroup = styled.div`
+export const Group = styled.div`
   display: flex;
   & > * ~ * {
     margin-left: 2rem;

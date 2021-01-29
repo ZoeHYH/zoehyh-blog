@@ -4,7 +4,7 @@ import { Transition } from "./Animation";
 import { Line } from "./Line";
 import { StyledH5 } from "./Text";
 import { ReactComponent as Arrow } from "../image/arrow.svg";
-import { FlexBetweenCenter } from "./Layout";
+import { FlexBetweenCenter, FlexCenter } from "./Layout";
 
 export const Button = styled.button`
   ${StyledH5}
@@ -57,7 +57,11 @@ ArrowButton.propTypes = {
 };
 
 export const Pagination = styled.div`
-  text-align: center;
+  ${FlexCenter}
+  margin-top: 3rem;
+  & > * ~ * {
+    margin-left: 2.5rem;
+  }
 `;
 
 export const Hamburger = styled.div`

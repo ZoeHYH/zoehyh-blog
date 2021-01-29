@@ -31,7 +31,7 @@ const userController = {
       where: { username },
       defaults: { nickname, password: hash }
     });
-    if (created) throw new BadRequest('帳號已經存在，請登入或重新輸入帳號');
+    if (!created) throw new BadRequest('帳號已經存在，請登入或重新輸入帳號');
     return res.status(201).json({
       ok: 1,
       token: usernameToken(user.username)

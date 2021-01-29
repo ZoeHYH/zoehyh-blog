@@ -9,7 +9,7 @@ import {
 import { Container, Main, Section, Wrapper } from "../components/Layout";
 import { Card } from "../components/Card";
 import { H1 } from "../components/Text";
-import { Pagination } from "../components/Pagination";
+import { Pagination } from "../components/Button";
 import { Nav } from "../components/Nav";
 import { Select } from "../components/Input";
 import { useEffect, useState } from "react";

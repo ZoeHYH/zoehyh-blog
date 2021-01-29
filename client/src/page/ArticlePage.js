@@ -37,8 +37,15 @@ export default function ArticlePage() {
   };
 
   useEffect(() => {
-    if (postStatus === "failed" || (postStatus === "succeeded" && !post))
-      history.goBack();
+    if (postStatus === "failed" || (postStatus === "succeeded" && !post)) {
+      if (
+        history.location.pathname !== "post" ||
+        history.location.pathname !== "edit" ||
+        history.location.pathname.indexOf("article") < 0
+      )
+        history.goBack();
+      history.push("/");
+    }
   }, [postStatus, post, history]);
 
   useEffect(() => {

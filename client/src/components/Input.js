@@ -339,7 +339,12 @@ export const InlineInput = ({
   buttonText,
   handleSubmit,
 }) => (
-  <StyledInlineInput onSubmit={() => handleSubmit(value)}>
+  <StyledInlineInput
+    onSubmit={(event) => {
+      event.preventDefault();
+      handleSubmit(value);
+    }}
+  >
     <StyledInput
       type={type}
       placeholder={placeholder}
@@ -436,9 +441,7 @@ export const FileInput = ({ value, handleImage }) => {
           placeholder={"或輸入圖片網址"}
           buttonText={"使用網址"}
           value={value}
-          handleValue={(value) => {
-            handleImage(value);
-          }}
+          handleValue={(value) => handleImage(value)}
           handleSubmit={handleUpload}
         />
         <div className={"flex"}>

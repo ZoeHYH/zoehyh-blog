@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
 const cors = require('cors');
+const favicon = require('serve-favicon');
 const { checkUser, checkAdmin } = require('./middlewares/auth');
 const userController = require('./controllers/user');
 const postController = require('./controllers/post');
@@ -13,7 +14,8 @@ const catchAsyncError = (fn) => (req, res, next) => {
   fn(req, res, next).catch(next);
 };
 
-app.use(express.static(path.join(__dirname, '..', 'client/build')));
+app.use(favicon(path.join(__dirname, '..', 'client', 'build', 'favicon.ico')));
+app.use(express.static(path.join(__dirname, '..', 'client', 'build')));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cors());

@@ -1,7 +1,6 @@
 # **ZoeHYH Blog**
 一個具備文章與會員系統的部落格，同時注意介面與使用者體驗，前端使用 React 搭配 Redux 建構 RWD 網站，並使用 Node.js 與 Express 建構後端 RESTful API，搭配 Sequelize CLI 以 ORM 方式操作資料庫。
 
----
 ## **功能**
 ### **前端**
 - 可以註冊並登入部落格。

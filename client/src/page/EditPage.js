@@ -53,7 +53,8 @@ export default function EditPage() {
   };
 
   useEffect(() => {
-    if (status === "succeeded") history.push(`/article/${post.id}`);
+    if (status === "succeeded" && status === "failed")
+      history.push(`/article/${post.id}`);
   }, [status, dispatch, history, post]);
 
   useEffect(() => {

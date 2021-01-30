@@ -16,10 +16,7 @@ import { useHistory, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getPostsSearch,
-  resetPostStatus,
   selectPostsQuery,
-  selectPostsResult,
-  selectPostStatus,
 } from "../redux/reducers/postReducer";
 
 const StyledSearchInput = styled.form`
@@ -68,10 +65,8 @@ const StyledSearchInput = styled.form`
 export const SearchInput = () => {
   const history = useHistory();
   const [value, setValue] = useState("");
-  const { pathname, search } = useLocation();
-  const postStatus = useSelector(selectPostStatus);
+  const { pathname } = useLocation();
   const dispatch = useDispatch();
-  const posts = useSelector(selectPostsResult);
   const query = useSelector(selectPostsQuery);
 
   const handleOnChange = ({ target }) => {
@@ -80,37 +75,12 @@ export const SearchInput = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    if (value && value !== query && postStatus === "ready") {
+    if (value && value !== query) {
       dispatch(getPostsSearch(value));
       setValue("");
-    }
-    if (posts && postStatus === "found") {
-      dispatch(resetPostStatus());
+      if (pathname !== "/result") history.push("/result");
     }
   };
-
-  useEffect(() => {
-    if (query && postStatus === "found") {
-      if (pathname === "/result")
-        history.replace({
-          search: `?search=${query}`,
-        });
-      else
-        history.push({
-          pathname: "/result",
-          search: `?search=${query}`,
-        });
-    }
-  }, [query, postStatus, pathname, history]);
-
-  useEffect(() => {
-    const param = new URLSearchParams(search).get("search");
-    if (param && query !== param && postStatus === "ready")
-      dispatch(getPostsSearch(param));
-    if (posts && postStatus === "found") {
-      dispatch(resetPostStatus());
-    }
-  }, [search, query, dispatch, posts, postStatus]);
 
   return (
     <StyledSearchInput onSubmit={handleSubmit}>

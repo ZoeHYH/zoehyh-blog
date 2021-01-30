@@ -70,10 +70,8 @@ export default function Blog() {
   }, [dispatch]);
 
   useEffect(() => {
-    if (postStatus === "idle") {
-      dispatch(getReady());
-    }
-  }, [postStatus, dispatch]);
+    dispatch(getReady());
+  }, [dispatch]);
 
   return (
     <>

@@ -27,6 +27,7 @@ const userController = {
     const { nickname, username, password } = req.body;
     if (!nickname || !username || !password) throw MissingError;
     const hash = await bcrypt.hash(password, saltRounds);
+    console.log(nickname);
     const [user, created] = await User.findOrCreate({
       where: { username },
       defaults: { nickname, password: hash }

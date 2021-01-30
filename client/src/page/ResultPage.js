@@ -1,12 +1,12 @@
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { LIST_LIMIT } from "../constants/variable";
 import {
   getPostsSearch,
-  resetPostStatus,
   selectPostError,
   selectPostsQuery,
   selectPostsResult,
+  selectPostStatus,
 } from "../redux/reducers/postReducer";
 import {
   Container,
@@ -17,27 +17,36 @@ import {
 } from "../components/Layout";
 import { Card } from "../components/Card";
 import { H1, H3, H7 } from "../components/Text";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { InlineInput } from "../components/Input";
 
 export default function ResultPage() {
   const history = useHistory();
+  const postStatus = useSelector(selectPostStatus);
   const dispatch = useDispatch();
+  const { search } = useLocation();
   const posts = useSelector(selectPostsResult);
   const error = useSelector(selectPostError);
   const [value, setValue] = useState("");
   const query = useSelector(selectPostsQuery);
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+  const handleSubmit = async (value) => {
     if (value && value !== query) {
       dispatch(getPostsSearch(value));
-      history.replace({
-        search: `?search=${value}`,
-      });
     }
-    dispatch(resetPostStatus());
   };
+
+  useEffect(() => {
+    const param = new URLSearchParams(search).get("search");
+    if (query !== param) {
+      if (postStatus === "idle" || postStatus === "ready")
+        dispatch(getPostsSearch(param));
+      else
+        history.push({
+          search: `?search=${query}`,
+        });
+    }
+  }, [search, query, dispatch, posts, postStatus, history]);
 
   return (
     <Main>

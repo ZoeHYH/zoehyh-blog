@@ -23,12 +23,13 @@ const getCategories = async () => {
 
 export const getReady = createAsyncThunk(
   "post/getReady",
-  async (_, rejectWithValue) => {
+  async (_, { rejectWithValue }) => {
     try {
       const { posts, count } = await getPosts();
       const categories = await getCategories();
       return { posts, count, categories };
     } catch (error) {
+      console.log(error);
       return rejectWithValue(error.message);
     }
   }
@@ -36,20 +37,20 @@ export const getReady = createAsyncThunk(
 
 export const getPostsSearch = createAsyncThunk(
   "post/getPostsSearch",
-  async (query, rejectWithValue) => {
+  async (query, { rejectWithValue }) => {
     try {
-      const { ok, posts, message } = await await getPostsSearchAPI(query);
+      const { ok, posts, message } = await getPostsSearchAPI(query);
       if (!ok) throw new Error(message);
       return { query, posts };
     } catch (error) {
-      return rejectWithValue(error.message);
+      return rejectWithValue({ query, error: error.message });
     }
   }
 );
 
 export const getPost = createAsyncThunk(
   "post/getPost",
-  async (id, rejectWithValue) => {
+  async (id, { rejectWithValue }) => {
     try {
       const { ok, post, message } = await getPostAPI(id);
       if (!ok) throw new Error(message);
@@ -160,8 +161,8 @@ export const postReducer = createSlice({
     },
     [getPostsSearch.rejected]: (state, action) => {
       state.status = "failed";
-      state.error = action.payload;
-      state.result.posts = [];
+      state.error = action.payload.error;
+      state.result = { query: action.payload.query, posts: [] };
     },
     [getPost.pending]: handlePending,
     [getPost.fulfilled]: (state, action) => {

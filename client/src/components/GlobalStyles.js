@@ -1,5 +1,5 @@
 import { createGlobalStyle } from "styled-components";
-import { TextBase } from "./Text";
+import { TextBase, StyledH4 } from "./Text";
 
 export const ResetStyle = createGlobalStyle`
   html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
@@ -33,7 +33,7 @@ export const ResetStyle = createGlobalStyle`
     box-sizing: border-box;
   }
   body {
-      line-height: 1;
+    line-height: 1;
   }
   ol, ul {
     list-style: none;
@@ -88,7 +88,7 @@ export const GlobalStyle = createGlobalStyle`
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     ${TextBase}
-    color: ${({ theme }) => theme.color.black}
+    color: ${({ theme }) => theme.color.black};
   }
   h1,
   h2,
@@ -103,6 +103,14 @@ export const GlobalStyle = createGlobalStyle`
   p {
     white-space: pre-wrap;
     word-break: break-word;
+  }
+  ol {
+    list-style: decimal inside;
+    ${StyledH4}
+  }
+  ul {
+    list-style: square inside;
+    ${StyledH4}
   }
   img {
     display: block;

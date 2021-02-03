@@ -44,7 +44,7 @@ export default function RegisterPage() {
       <Wrapper>
         <ArticleBlock>
           <Wrapper $small>
-            <H1 className={"title"}>登入部落格</H1>
+            <H1 className={"title"}>註冊部落格</H1>
             <Form className={"content"} onSubmit={handleOnSubmit}>
               <Input
                 title="暱稱"

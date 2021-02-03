@@ -12,10 +12,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { ArticleBlock, Main, Wrapper } from "../components/Layout";
 import { Image } from "../components/Image";
-import { H1, H4, H5 } from "../components/Text";
+import { H1, H5 } from "../components/Text";
 import { Button } from "../components/Button";
 import { ArrowLink } from "../components/Link";
 import { selectUserStatus } from "../redux/reducers/userReducer";
+import { Markdown } from "../components/Markdown";
 
 export default function ArticlePage() {
   const { id } = useParams();
@@ -33,27 +34,30 @@ export default function ArticlePage() {
   const post = postById || postByFetch;
 
   const handleDelete = () => {
-    if (userStatus === "succeeded") dispatch(deletePost(id));
+    if (userStatus === "succeeded") {
+      dispatch(deletePost(id));
+    }
   };
 
   useEffect(() => {
     if (postStatus === "failed" || (postStatus === "succeeded" && !post)) {
       if (
         history.location.pathname !== "post" ||
-        history.location.pathname !== "edit" ||
-        history.location.pathname.indexOf("article") < 0
+        history.location.pathname !== "edit"
       )
         history.goBack();
-      history.push("/");
+      history.push("/list");
     }
   }, [postStatus, post, history]);
 
   useEffect(() => {
     return () => {
-      dispatch(resetPostStatus());
-      dispatch(resetPost());
+      if (postStatus === "succeeded") {
+        dispatch(resetPostStatus());
+        dispatch(resetPost());
+      }
     };
-  }, [dispatch]);
+  }, [dispatch, postStatus]);
 
   return (
     <Main>
@@ -69,7 +73,7 @@ export default function ArticlePage() {
               <Image $width={"max"} $height={"500"} $image={post.image} />
             </div>
             <Wrapper $medium className={"content"}>
-              <H4 as="p">{post.body}</H4>
+              <Markdown source={post.body} />
               {userStatus === "succeeded" && (
                 <div className="group">
                   <Button $alert onClick={handleDelete}>

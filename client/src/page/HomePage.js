@@ -52,7 +52,7 @@ export default function HomePage() {
               <ArrowLink
                 to={"/about"}
                 className={"link"}
-                label={"更多關於我的事情"}
+                label={"更多資訊"}
                 $hide
               />
             </Block>

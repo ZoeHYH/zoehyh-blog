@@ -2,7 +2,7 @@ import styled, { css } from "styled-components";
 import PropTypes from "prop-types";
 import { ReactComponent as Search } from "../image/search.svg";
 import { H7, StyledH5, StyledH7, TextColor } from "./Text";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { Transition } from "./Animation";
 import { AfterLine } from "./Line";
 import { ReactComponent as Down } from "../image/down.svg";

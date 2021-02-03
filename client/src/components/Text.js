@@ -120,3 +120,16 @@ export const H7 = styled.h6`
   ${StyledH7}
   ${TextColor}
 `;
+
+export const P = styled.p`
+  ${StyledH4}
+  ${TextColor}
+`;
+
+export const Code = styled.code`
+  font-size: 90%;
+  border-radius: 0.25px;
+  padding: 0.25rem 0.5rem;
+  background: ${({ theme }) => theme.color.grey[100]};
+  color: ${({ theme }) => theme.color.primaryDark};
+`;

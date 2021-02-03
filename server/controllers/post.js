@@ -1,17 +1,14 @@
 const { Post, Category } = require('../models');
 const { Op } = require('sequelize');
 const { MissingError, NotFound, BadRequest } = require('../utils/error');
+const { contents } = require('../utils/contents');
 
 const postController = {
   reset: async (req, res, next) => {
     await Post.destroy({ truncate: true, restartIdentity: true, force: true });
-    for (let i = 1; i < 61; i++) {
-      await Post.create({
-        title: `test${i}`,
-        body: `test${i}`,
-        CategoryId: i % 4 || 4
-      });
-    }
+    contents.forEach(async (content) => {
+      await Post.create(content);
+    });
     const { count, rows } = await Post.findAndCountAll({
       order: [['updatedAt', 'desc']],
       include: Category
@@ -110,6 +107,6 @@ const postController = {
     });
     if (!post) throw new BadRequest('這篇文章不存在');
     return res.status(200).json({ ok: 1, post });
-  },
+  }
 };
 module.exports = postController;

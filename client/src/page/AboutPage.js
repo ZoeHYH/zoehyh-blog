@@ -1,6 +1,7 @@
 import { Image } from "../components/Image";
 import { ArticleBlock, Main, Wrapper } from "../components/Layout";
-import { H1, H4, H5 } from "../components/Text";
+import { Markdown } from "../components/Markdown";
+import { H1, H5 } from "../components/Text";
 import { ABOUT } from "../constants/text";
 import { defaultImage } from "../constants/variable";
 
@@ -18,7 +19,7 @@ export default function AboutPage() {
             <Image $width={"max"} $height={"500"} $image={defaultImage} />
           </div>
           <Wrapper $medium className={"content"}>
-            <H4 as="p">{ABOUT.body}</H4>
+            <Markdown source={ABOUT.body} />
           </Wrapper>
         </ArticleBlock>
       </Wrapper>

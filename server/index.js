@@ -3,13 +3,13 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const cors = require('cors');
 const favicon = require('serve-favicon');
-const { checkUser, checkAdmin } = require('./middlewares/auth');
+const { checkUser } = require('./middlewares/auth');
 const userController = require('./controllers/user');
 const postController = require('./controllers/post');
 const categoryController = require('./controllers/category');
 const { handleError } = require('./utils/error');
 const app = express();
-const port = 5002;
+const port = 5001;
 const catchAsyncError = (fn) => (req, res, next) => {
   fn(req, res, next).catch(next);
 };
@@ -32,21 +32,6 @@ app.get(
       count: res.locals.count,
       posts: res.locals.posts
     })
-);
-app.get(
-  '/api/users/reset',
-  catchAsyncError(checkAdmin),
-  catchAsyncError(userController.reset)
-);
-app.get(
-  '/api/posts/reset',
-  catchAsyncError(checkAdmin),
-  catchAsyncError(postController.reset)
-);
-app.get(
-  '/api/categories/reset',
-  catchAsyncError(checkAdmin),
-  catchAsyncError(categoryController.reset)
 );
 
 app.get(
@@ -83,7 +68,7 @@ app.patch(
 app.get('/api/categories', catchAsyncError(categoryController.getAll));
 app.get('/api/categories/:id', catchAsyncError(categoryController.getOne));
 app.post(
-  '/api/categories/:id',
+  '/api/categories',
   catchAsyncError(checkUser),
   catchAsyncError(categoryController.create)
 );

@@ -1,6 +1,6 @@
 import { LIST_LIMIT } from "./constants/variable";
 import { getAuthToken } from "./utils";
-const baseUrl = "http://localhost:5002/api";
+const baseUrl = "https://blog.zoehyh.tw/api";
 const cloudinaryBaseUrl = "https://api.cloudinary.com/v1_1/zoehyh/auto/upload";
 
 export const getPosts = async () => {

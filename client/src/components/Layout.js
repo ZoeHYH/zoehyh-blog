@@ -127,6 +127,7 @@ export const Group = styled.div`
 `;
 
 export const Ul = styled.ul`
+  list-style: none;
   & > li ~ li {
     ${({ $medium }) => $medium && `margin-top: 1.5rem;`}
     ${({ $small }) => $small && `margin-top: 1rem;`}

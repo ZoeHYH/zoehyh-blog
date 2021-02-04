@@ -29,7 +29,6 @@ export const getReady = createAsyncThunk(
       const categories = await getCategories();
       return { posts, count, categories };
     } catch (error) {
-      console.log(error);
       return rejectWithValue(error.message);
     }
   }

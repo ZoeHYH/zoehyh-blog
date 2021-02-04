@@ -128,6 +128,118 @@ Root Path：[https://blog.zoehyh.tw/api](https://blog.zoehyh.tw/api)
 - 更新文章類別 `PUT` /categories/:id
 - 刪除文章類別 `DELETE` /categories/:id
 
+### Response
+- 成功
+  - 回傳成功 - `DELETE` /posts/:id、`DELETE` /categories/:id
+    ```JSON
+    {
+      ok: 1
+    }
+    ```
+  - 回傳文章列表 - `GET` /posts
+    ```JSON
+    {
+      ok: 1,
+      posts: [
+        {
+          id: 1,
+          image: "link",
+          title: "title",
+          body: "body",
+          createdAt: "2021-02-04T15:50:31.000Z",
+          updatedAt: "2021-02-04T15:50:31.000Z",
+          deletedAt: null,
+          CategoryId: 1,
+          Category: {
+            id: 1,
+            text: "程式",
+            createdAt: "2021-02-04T15:50:31.000Z",
+            updatedAt: "2021-02-04T15:50:31.000Z"
+          }
+        },
+        ...other post,
+      ]
+    }
+    ```
+  - 回傳單一文章 - `POST` /posts、`PATCH` /posts/:id、`PATCH` /posts/:id/restore
+      ```JSON
+      {
+        ok: 1,
+        post:{
+          id: 1,
+          image: "link",
+          title: "title",
+          body: "body",
+          createdAt: "2021-02-04T15:50:31.000Z",
+          updatedAt: "2021-02-04T15:50:31.000Z",
+          deletedAt: null,
+          CategoryId: 1,
+          Category: {
+            id: 1,
+            text: "程式",
+            createdAt: "2021-02-04T15:50:31.000Z",
+            updatedAt: "2021-02-04T15:50:31.000Z"
+          }
+        },
+      }
+      ```
+  - 回傳使用者 - `GET` /users/verify
+    ```JSON
+    {
+      ok: 1,
+      user: {
+        id: 1,
+        role: "user",
+        nickname: "nickname",
+        username: "username",
+        password: "token",
+        createdAt: "2021-02-04T15:50:31.000Z",
+        updatedAt: "2021-02-04T15:50:31.000Z"
+      }
+    }
+    ```
+  - 回傳 token - `POST` /users/register、`POST` /users/login
+    ```JSON
+    {
+      ok: 1,
+      token: "token"
+    }
+    ```
+  - 回傳所有文章類別 `GET` /categories
+    ```JSON
+    {
+      ok: 1,
+      categories: [
+        {
+          id: 1,
+          text: "category",
+          createdAt: "2021-02-04T15:50:31.000Z",
+          updatedAt: "2021-02-04T15:50:31.000Z"
+        },
+        ...other categories
+      ]
+    }
+    ```
+  - 回傳單一文章類別 `POST` /categories、`GET` /categories/:id、`PUT` /categories/:id
+    ```JSON
+    {
+      ok: 1,
+      category: {
+        id: 1,
+        text: "category",
+        createdAt: "2021-02-04T15:50:31.000Z",
+        updatedAt: "2021-02-04T15:50:31.000Z"
+      }
+    }
+    ```
+- 失敗
+  ```JSON
+  {
+    ok: 0,
+    message: "error message"
+  }
+  ```
+
 ## 檔案結構
 - .env
 - server

@@ -15,7 +15,8 @@ const tokenUsername = (token) => {
 const checkUser = async (req, res, next) => {
     if (!req.header('Authorization')) throw MissingError;
     const token = req.header('Authorization').replace('Bearer ', '');
-    const user = User.findOne({ where: { username: tokenUsername(token) } });
+    const username = tokenUsername(token);
+    const user = await User.findOne({ where: { username } });
     if (!user) throw new NotFound("帳號不存在");
     res.locals.user = user;
     next();

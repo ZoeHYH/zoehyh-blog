@@ -1,38 +1,38 @@
 import { LIST_LIMIT } from "./constants/variable";
 import { getAuthToken } from "./utils";
-const baseUrl = "https://blog.zoehyh.tw/api";
+const baseUrl = "https://blog.zoehyh.tw";
 const cloudinaryBaseUrl = "https://api.cloudinary.com/v1_1/zoehyh/auto/upload";
 
 export const getPosts = async () => {
-  const response = await fetch(`${baseUrl}/posts`);
+  const response = await fetch(`${baseUrl}/api/posts`);
   return response.json();
 };
 
 export const getCategories = async () => {
-  const response = await fetch(`${baseUrl}/categories`);
+  const response = await fetch(`${baseUrl}/api/categories`);
   return response.json();
 };
 
 export const getPostsSearch = async (query) => {
-  const response = await fetch(`${baseUrl}/posts?query=${query}`);
+  const response = await fetch(`${baseUrl}/api/posts?query=${query}`);
   return response.json();
 };
 
 export const getPostsPage = async (page) => {
   const response = await fetch(
-    `${baseUrl}/posts?_limit${LIST_LIMIT}&_page=${page}`
+    `${baseUrl}/api/posts?_limit${LIST_LIMIT}&_page=${page}`
   );
   return response.json();
 };
 
 export const getPost = async (id) => {
-  const response = await fetch(`${baseUrl}/posts/${id}`);
+  const response = await fetch(`${baseUrl}/api/posts/${id}`);
   return response.json();
 };
 
 export const createPost = async (image, title, body, CategoryId) => {
   const token = getAuthToken();
-  const response = await fetch(`${baseUrl}/posts`, {
+  const response = await fetch(`${baseUrl}/api/posts`, {
     method: "POST",
     headers: {
       "content-type": "application/json",
@@ -45,7 +45,7 @@ export const createPost = async (image, title, body, CategoryId) => {
 
 export const updatePost = async (id, image, title, body, CategoryId) => {
   const token = getAuthToken();
-  const response = await fetch(`${baseUrl}/posts/${id}`, {
+  const response = await fetch(`${baseUrl}/api/posts/${id}`, {
     method: "PATCH",
     headers: {
       "content-type": "application/json",
@@ -58,7 +58,7 @@ export const updatePost = async (id, image, title, body, CategoryId) => {
 
 export const deletePost = async (id) => {
   const token = getAuthToken();
-  const response = await fetch(`${baseUrl}/posts/${id}`, {
+  const response = await fetch(`${baseUrl}/api/posts/${id}`, {
     method: "DELETE",
     headers: {
       "content-type": "application/json",
@@ -70,7 +70,7 @@ export const deletePost = async (id) => {
 
 export const verify = async () => {
   const token = getAuthToken();
-  const response = await fetch(`${baseUrl}/users/verify`, {
+  const response = await fetch(`${baseUrl}/api/users/verify`, {
     headers: {
       authorization: `Bearer ${token}`,
     },
@@ -79,7 +79,7 @@ export const verify = async () => {
 };
 
 export const login = (username, password) => {
-  return fetch(`${baseUrl}/users/login`, {
+  return fetch(`${baseUrl}/api/users/login`, {
     method: "POST",
     headers: {
       "content-type": "application/json",
@@ -89,7 +89,7 @@ export const login = (username, password) => {
 };
 
 export const register = async (nickname, username, password) => {
-  const response = await fetch(`${baseUrl}/users/register`, {
+  const response = await fetch(`${baseUrl}/api/users/register`, {
     method: "POST",
     headers: {
       "content-type": "application/json",

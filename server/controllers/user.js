@@ -27,7 +27,6 @@ const userController = {
     const { nickname, username, password } = req.body;
     if (!nickname || !username || !password) throw MissingError;
     const hash = await bcrypt.hash(password, saltRounds);
-    console.log(nickname);
     const [user, created] = await User.findOrCreate({
       where: { username },
       defaults: { nickname, password: hash }
@@ -52,11 +51,12 @@ const userController = {
       });
     });
   },
-  verify: async (req, res) =>
-    res.status(200).json({
+  verify: async (req, res) =>{
+    return res.status(200).json({
       ok: 1,
       user: res.locals.user
-    }),
+    })
+  },
   delete: async (req, res) => {
     if (!req.params.id) throw MissingError;
     await User.destroy({ where: { id: req.params.id } });

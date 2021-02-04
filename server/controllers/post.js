@@ -6,15 +6,9 @@ const { contents } = require('../utils/contents');
 const postController = {
   reset: async (req, res, next) => {
     await Post.destroy({ truncate: true, restartIdentity: true, force: true });
-    contents.forEach(async (content) => {
-      await Post.create(content);
-    });
-    const { count, rows } = await Post.findAndCountAll({
-      order: [['updatedAt', 'desc']],
-      include: Category
-    });
-    res.locals.count = count;
-    res.locals.posts = rows;
+    const posts= await Post.bulkCreate(contents);
+    res.locals.count = posts.length;
+    res.locals.posts = posts;
     next();
   },
   getAll: async (req, res) => {

@@ -23,7 +23,7 @@ const checkUser = async (req, res, next) => {
 };
 
 const checkAdmin = async (req, res, next) => {
-if (res.locals.user.role !== 'admin') throw VarifyError;
+  if (res.locals.user.role !== 'admin') throw VarifyError;
   next();
 };
 
